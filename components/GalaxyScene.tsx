@@ -132,5 +132,14 @@ export function GalaxyScene() {
     return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);gl.deleteBuffer(buffer);gl.deleteProgram(program)};
   }, [tier, mouse]);
 
-  return <div className="cosmos" aria-hidden="true"><canvas ref={canvasRef}/><div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="nebula nebula-c"/><div className="cosmic-horizon"/></div>;
+  return <div className="cosmos" aria-hidden="true">
+    <div className="section-auras"><i className="aura aura-home"/><i className="aura aura-skills"/><i className="aura aura-projects"/><i className="aura aura-contact"/></div>
+    <canvas ref={canvasRef}/>
+    <svg className="cosmic-constellations" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice">
+      <g className="constellation-shape constellation-one"><path d="M80 190L155 128L230 205L315 112L388 174"/><circle cx="80" cy="190" r="3"/><circle cx="155" cy="128" r="4"/><circle cx="230" cy="205" r="3"/><circle cx="315" cy="112" r="4"/><circle cx="388" cy="174" r="3"/></g>
+      <g className="constellation-shape constellation-two"><path d="M650 495L724 410L802 470L878 366L950 438M724 410L878 366"/><circle cx="650" cy="495" r="3"/><circle cx="724" cy="410" r="4"/><circle cx="802" cy="470" r="3"/><circle cx="878" cy="366" r="4"/><circle cx="950" cy="438" r="3"/></g>
+    </svg>
+    <div className="shooting-stars"><i/><i/><i/></div>
+    <div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="nebula nebula-c"/><div className="cosmic-horizon"/>
+  </div>;
 }

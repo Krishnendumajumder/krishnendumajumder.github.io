@@ -12,6 +12,7 @@ export function SiteExperience() {
     const active = new IntersectionObserver(entries => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       nav.forEach(link => link.classList.toggle('active', link.hash === `#${entry.target.id}`));
+      document.body.dataset.cosmicSection = entry.target.id;
     }), { rootMargin: '-35% 0px -55%' });
     sections.forEach(section => active.observe(section));
     const onScroll = () => {
@@ -20,7 +21,7 @@ export function SiteExperience() {
       document.body.classList.toggle('scrolled', scrollY > 24);
     };
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
-    return () => { reveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); };
+    return () => { reveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); delete document.body.dataset.cosmicSection; };
   }, []);
   return <GalaxyScene/>;
 }
