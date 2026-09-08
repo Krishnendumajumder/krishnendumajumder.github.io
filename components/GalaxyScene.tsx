@@ -34,9 +34,9 @@ void main() {
   projected.x *= uResolution.y/uResolution.x;
   gl_Position = vec4(projected*1.7, 0.0, 1.0);
   float pulse = .88 + .12*sin(uTime*.0007 + aPosition.x*2.3);
-  gl_PointSize = min(9.0, aSize * pulse * (110.0/depth) * (1.0+uWarp*2.2));
+  gl_PointSize = min(12.0, aSize * pulse * (135.0/depth) * (1.0+uWarp*2.35));
   vColor = aColor;
-  vAlpha = smoothstep(180.0, 16.0, depth) * smoothstep(.4, 3.0, gl_PointSize);
+  vAlpha = (1.0-smoothstep(135.0,190.0,depth)) * smoothstep(.2,2.0,gl_PointSize);
 }`;
 const fragment = `
 precision mediump float;
@@ -45,9 +45,9 @@ varying float vAlpha;
 void main(){
   vec2 q=gl_PointCoord-.5;
   float d=length(q);
-  float core=smoothstep(.28,0.0,d);
-  float halo=smoothstep(.5,.08,d)*.5;
-  gl_FragColor=vec4(vColor*(core*1.4+halo),vAlpha*(core+halo));
+  float core=smoothstep(.24,0.0,d);
+  float halo=smoothstep(.5,.06,d)*.62;
+  gl_FragColor=vec4(vColor*(core*1.65+halo),vAlpha*(core+halo));
 }`;
 
 function shader(gl: WebGLRenderingContext, type: number, source: string) {
@@ -62,14 +62,20 @@ function createStars(count: number) {
   let seed = 9147;
   const random = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
   for (let i = 0; i < count; i++) {
-    const arm = (i % 4) * Math.PI * .5;
-    const radius = 4 + Math.pow(random(), .55) * 56;
-    const swirl = arm + radius * .095 + (random() - .5) * .85;
     const j = i * 7;
-    data[j] = Math.cos(swirl) * radius + (random() - .5) * 6;
-    data[j+1] = (random() - .5) * (5 + radius * .12);
-    data[j+2] = -random() * 185 + Math.sin(swirl) * radius * .25;
-    data[j+3] = .75 + random() * 2.5;
+    if (i < count * .72) {
+      const arm = (i % 5) * Math.PI * .4;
+      const radius = 1.5 + Math.pow(random(), .62) * 62;
+      const swirl = arm + radius * .11 + (random() - .5) * .7;
+      data[j] = Math.cos(swirl) * radius + (random() - .5) * 5;
+      data[j+1] = (random() - .5) * (3.5 + radius * .1);
+      data[j+2] = -random() * 190 + Math.sin(swirl) * radius * .32;
+    } else {
+      data[j] = (random() - .5) * 125;
+      data[j+1] = (random() - .5) * 82;
+      data[j+2] = -random() * 195;
+    }
+    data[j+3] = i % 127 === 0 ? 5.4 : .8 + Math.pow(random(), 2) * 3.4;
     const cool = random();
     data[j+4] = cool > .78 ? .55 : .78 + random() * .22;
     data[j+5] = cool > .78 ? .72 : .8 + random() * .2;
@@ -98,7 +104,7 @@ export function GalaxyScene() {
     gl.linkProgram(program);
     const activate = gl.useProgram.bind(gl);
     activate(program);
-    const count = tier === 'desktop' ? 5200 : tier === 'mobile' ? 2400 : 1500;
+    const count = tier === 'desktop' ? 9200 : tier === 'mobile' ? 4300 : 2200;
     const data = createStars(count);
     const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
     const stride = 7 * 4;
@@ -126,5 +132,5 @@ export function GalaxyScene() {
     return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);gl.deleteBuffer(buffer);gl.deleteProgram(program)};
   }, [tier, mouse]);
 
-  return <div className="cosmos" aria-hidden="true"><canvas ref={canvasRef}/><div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="cosmic-horizon"/></div>;
+  return <div className="cosmos" aria-hidden="true"><canvas ref={canvasRef}/><div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="nebula nebula-c"/><div className="cosmic-horizon"/></div>;
 }
