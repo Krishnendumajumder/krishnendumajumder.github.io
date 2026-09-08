@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowUpRight, Code2, MapPin, Network, RadioTower, ScanLine, Users } from 'lucide-react';
 import { SiteExperience } from '@/components/SiteExperience';
+import { PhoneReveal } from '@/components/PhoneReveal';
 
 const skills = ['Python','SQL','Data Science','Machine Learning','Artificial Intelligence','Satellite Remote Sensing','Google Earth Engine','Sentinel-1','Sentinel-2','Geospatial Analysis','IBM CPLEX'];
 const projects = [
@@ -42,7 +43,7 @@ export default function Home(){return <>
 
     <section id="education" data-section className="section education-section reveal"><div><Label>05 / EDUCATION</Label><h2>The path so far.</h2></div><div className="education-list"><article><span>2022 — 2025</span><h3>B.Tech · Computer Science Engineering</h3><p>RCC Institute of Information Technology, Kolkata</p></article><article><span>2019 — 2022</span><h3>Computer Science and Technology</h3><p>Elitte Institute of Engineering & Management, Kolkata</p></article><article><span>2019 / 2017</span><h3>Higher Secondary / Secondary Education</h3><p>Hare School, Kolkata</p></article></div></section>
 
-    <section id="contact" data-section className="contact reveal"><Label>06 / FINAL ORBIT · GET IN TOUCH</Label><h2>Let’s build what’s<br/>next<span>.</span></h2><p>Let’s connect about AI, data science, and opportunities to build something useful.</p><a className="email" href="mailto:krishnendumajumder32@gmail.com">krishnendumajumder32@gmail.com <ArrowUpRight/></a><div className="contact-socials">{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={20}/><span>{label}</span><ArrowUpRight size={15}/></a>)}</div><div className="contact-bottom"><div><a href="tel:+919038709232">+91 90387 09232</a><a href="tel:+919038959441">+91 90389 59441</a></div><span><MapPin size={16}/> Kolkata, India</span></div></section>
+    <section id="contact" data-section className="contact reveal"><Label>06 / FINAL ORBIT · GET IN TOUCH</Label><h2>Let’s build what’s<br/>next<span>.</span></h2><p>Let’s connect about AI, data science, and opportunities to build something useful.</p><a className="email" href="mailto:krishnendumajumder32@gmail.com">krishnendumajumder32@gmail.com <ArrowUpRight/></a><div className="contact-socials">{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={20}/><span>{label}</span><ArrowUpRight size={15}/></a>)}</div><div className="contact-bottom"><div className="phone-reveals"><PhoneReveal href="tel:+919038709232" number="+91 90387 09232" label="primary phone number"/><PhoneReveal href="tel:+919038959441" number="+91 90389 59441" label="alternate phone number"/></div><span><MapPin size={16}/> Kolkata, India</span></div></section>
   </main>
   <footer><a className="brand" href="#home">km<span>.</span></a><span>© {new Date().getFullYear()} Krishnendu Majumder</span><a href="#home">Back to launch ↑</a></footer>
 </>}
