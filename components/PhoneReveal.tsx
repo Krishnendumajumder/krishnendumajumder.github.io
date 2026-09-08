@@ -4,17 +4,15 @@ import { Phone } from 'lucide-react';
 import { useState } from 'react';
 
 type PhoneRevealProps = {
-  href: string;
-  number: string;
-  label: string;
+  numbers: Array<{ href: string; number: string; label: string }>;
 };
 
-export function PhoneReveal({ href, number, label }: PhoneRevealProps) {
+export function PhoneReveal({ numbers }: PhoneRevealProps) {
   const [revealed, setRevealed] = useState(false);
 
   if (revealed) {
-    return <a className="revealed-phone" href={href} aria-label={`Call ${label} at ${number}`}><Phone size={16}/><span>{number}</span></a>;
+    return <div className="revealed-phones"><Phone size={18}/><div>{numbers.map(({href, number, label}) => <a key={href} href={href} aria-label={`Call ${label} at ${number}`}>{number}</a>)}</div></div>;
   }
 
-  return <button className="phone-symbol" type="button" onClick={() => setRevealed(true)} aria-label={`Reveal ${label}`} title={`Reveal ${label}`}><Phone size={20}/><span className="sr-only">Reveal {label}</span></button>;
+  return <button className="phone-symbol" type="button" onClick={() => setRevealed(true)} aria-label="Reveal both phone numbers" title="Reveal phone numbers"><Phone size={20}/><span className="sr-only">Reveal both phone numbers</span></button>;
 }
