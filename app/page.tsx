@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, MapPin, Network, RadioTower, ScanLine } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Code2, MapPin, Network, RadioTower, ScanLine, Users } from 'lucide-react';
 import { SiteExperience } from '@/components/SiteExperience';
 
 const skills = ['Python','SQL','Data Science','Machine Learning','Artificial Intelligence','Satellite Remote Sensing','Google Earth Engine','Sentinel-1','Sentinel-2','Geospatial Analysis','IBM CPLEX'];
@@ -6,6 +6,11 @@ const projects = [
   { n:'01', type:'REMOTE SENSING · MACHINE LEARNING', title:'Reading the earth. Predicting the crop.', name:'Satellite-Based Crop Classification & Prediction', text:'A multi-temporal workflow combining Sentinel-1 SAR and Sentinel-2 multispectral imagery to distinguish crop categories across growth stages.', detail:'Analyzes satellite bands, vegetation indices, and temporal changes in spectral and SAR characteristics to support crop identification and prediction.', tags:['Python','Google Earth Engine','Sentinel-1 & 2'], Icon:ScanLine },
   { n:'02', type:'COMPUTER VISION · INFRASTRUCTURE', title:'A closer look at critical infrastructure.', name:'Transmission Tower Detection & Thermal Distress Monitoring', text:'An infrastructure monitoring workflow for transmission tower detection and condition analysis using RGB, thermal, and 3D information.', detail:'Focuses on thermal anomalies, tower distress, and nearby vegetation growth to support monitoring and maintenance analysis.', tags:['RGB & thermal analysis','3D data','Vegetation monitoring'], Icon:RadioTower },
   { n:'03', type:'MATHEMATICAL OPTIMIZATION', title:'The right location. A better network.', name:'P-Median Facility Location Optimization', text:'A mixed integer programming model for a nine-city network, selecting three warehouses and assigning every customer to exactly one facility.', detail:'Implemented in IBM CPLEX Optimization Studio with OPL, using demand data, inter-city distances, and binary decision variables for facility opening and customer assignments.', tags:['IBM CPLEX','OPL','Mixed Integer Programming'], Icon:Network },
+];
+
+const socialLinks = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/krishnendu-majumder-a376b83a8', Icon: Users },
+  { label: 'GitHub', href: 'https://github.com/Krishnendumajumder', Icon: Code2 },
 ];
 
 const Label = ({children}:{children:React.ReactNode}) => <div className="eyebrow"><span className="dot"/>{children}</div>;
@@ -23,7 +28,7 @@ export default function Home(){return <>
       <Label>AI / ML DEVELOPER · KOLKATA, INDIA</Label>
       <p className="hero-kicker">KRISHNENDU MAJUMDER</p>
       <h1>Intelligence,<br/><span>seen from above.</span></h1>
-      <div className="hero-bottom"><div><p className="hero-roles">AI/ML Developer <i/> Data Science <i/> Remote Sensing <i/> Geospatial Intelligence</p><p>Building intelligent systems from data, satellites and AI.</p><a className="button" href="#about">Begin the journey <ArrowDown size={18}/></a></div><div className="hero-note"><span>FOCUS AREAS</span><p>Earth observation<br/>Predictive modeling<br/>Optimization</p></div></div>
+      <div className="hero-bottom"><div><p className="hero-roles">AI/ML Developer <i/> Data Science <i/> Remote Sensing <i/> Geospatial Intelligence</p><p>Building intelligent systems from data, satellites and AI.</p><div className="hero-actions"><a className="button" href="#about">Begin the journey <ArrowDown size={18}/></a><div className="social-links">{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer" aria-label={`Visit Krishnendu Majumder on ${label}`}><Icon size={18}/><span>{label}</span><ArrowUpRight size={13}/></a>)}</div></div></div><div className="hero-note"><span>FOCUS AREAS</span><p>Earth observation<br/>Predictive modeling<br/>Optimization</p></div></div>
       <div className="hero-footer"><span>TECHNICAL PORTFOLIO · 2026</span><span>SCROLL TO TRAVEL ↓</span></div>
     </section>
 
@@ -37,7 +42,7 @@ export default function Home(){return <>
 
     <section id="education" data-section className="section education-section reveal"><div><Label>05 / EDUCATION</Label><h2>The path so far.</h2></div><div className="education-list"><article><span>2022 — 2025</span><h3>B.Tech · Computer Science Engineering</h3><p>RCC Institute of Information Technology, Kolkata</p></article><article><span>2019 — 2022</span><h3>Computer Science and Technology</h3><p>Elitte Institute of Engineering & Management, Kolkata</p></article><article><span>2019 / 2017</span><h3>Higher Secondary / Secondary Education</h3><p>Hare School, Kolkata</p></article></div></section>
 
-    <section id="contact" data-section className="contact reveal"><Label>06 / FINAL ORBIT · GET IN TOUCH</Label><h2>Let’s build what’s<br/>next<span>.</span></h2><p>Let’s connect about AI, data science, and opportunities to build something useful.</p><a className="email" href="mailto:krishnendumajumder32@gmail.com">krishnendumajumder32@gmail.com <ArrowUpRight/></a><div className="contact-bottom"><div><a href="tel:+919038709232">+91 90387 09232</a><a href="tel:+919038959441">+91 90389 59441</a></div><span><MapPin size={16}/> Kolkata, India</span></div></section>
+    <section id="contact" data-section className="contact reveal"><Label>06 / FINAL ORBIT · GET IN TOUCH</Label><h2>Let’s build what’s<br/>next<span>.</span></h2><p>Let’s connect about AI, data science, and opportunities to build something useful.</p><a className="email" href="mailto:krishnendumajumder32@gmail.com">krishnendumajumder32@gmail.com <ArrowUpRight/></a><div className="contact-socials">{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={20}/><span>{label}</span><ArrowUpRight size={15}/></a>)}</div><div className="contact-bottom"><div><a href="tel:+919038709232">+91 90387 09232</a><a href="tel:+919038959441">+91 90389 59441</a></div><span><MapPin size={16}/> Kolkata, India</span></div></section>
   </main>
   <footer><a className="brand" href="#home">km<span>.</span></a><span>© {new Date().getFullYear()} Krishnendu Majumder</span><a href="#home">Back to launch ↑</a></footer>
 </>}
