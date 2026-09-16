@@ -13,7 +13,18 @@ export function SiteExperience() {
   useEffect(() => {
     const sections = [...document.querySelectorAll<HTMLElement>('[data-section]')];
     const nav = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav]')];
+    const items = [...document.querySelectorAll<HTMLElement>('.section-heading, .project, .about > div, .timeline article, .education-list article, .contact-heading, .contact h2, .contact-grid, .contact-bottom, .skill-constellation, .skill-disciplines')];
+    items.forEach((item, index) => {
+      item.classList.add('scroll-reveal');
+      item.style.setProperty('--reveal-delay', `${index % 3 * 70}ms`);
+    });
     document.documentElement.classList.add('motion-ready');
+    const itemReveal = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in-view');
+      itemReveal.unobserve(entry.target);
+    }), { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+    items.forEach(item => itemReveal.observe(item));
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('is-visible')), { threshold: .05 });
     sections.forEach(section => reveal.observe(section));
     const active = new IntersectionObserver(entries => entries.forEach(entry => {
@@ -28,7 +39,7 @@ export function SiteExperience() {
       document.body.classList.toggle('scrolled', scrollY > 24);
     };
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
-    return () => { reveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); delete document.body.dataset.cosmicSection; };
+    return () => { reveal.disconnect(); itemReveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); document.documentElement.classList.remove('motion-ready'); items.forEach(item => item.classList.remove('scroll-reveal', 'in-view')); delete document.body.dataset.cosmicSection; };
   }, []);
   return <><GalaxyScene paused={paused}/><button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
 }

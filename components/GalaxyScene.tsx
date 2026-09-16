@@ -88,6 +88,7 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const velocity = useRef(0);
+  const introStart = useRef<number | null>(null);
   const performanceTier = usePerformanceTier();
   const tier = paused ? 'reduced' : performanceTier;
   const mouse = useMouseParallax(tier === 'desktop');
@@ -117,17 +118,20 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
     const resize=()=>{const dpr=Math.min(window.devicePixelRatio,tier==='desktop'?1.5:1);canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);gl.viewport(0,0,canvas.width,canvas.height);cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)};
     const draw=(now:number)=>{
       if (document.hidden) return;
+      if (introStart.current === null) introStart.current = now;
+      const entrance = tier === 'reduced' ? 0 : Math.pow(1 - Math.min(1, (now-introStart.current)/2600), 3);
       smoothP += (progress.current-smoothP)*(tier==='reduced'?1:.045);
       smoothWarp += ((tier==='reduced'?0:velocity.current)-smoothWarp)*.07;
       mx += (mouse.current.x-mx)*.025; my += (mouse.current.y-my)*.025;
       const journey=tier==='reduced'?.08:smoothP;
       const x=Math.sin(journey*Math.PI*2.1)*3.2+mx*1.2;
-      const y=Math.sin(journey*Math.PI*1.35)*2.4-my*.8;
-      const z=8-journey*150;
+      const drift = tier === 'reduced' ? 0 : Math.sin(now*.00008)*.8;
+      const y=Math.sin(journey*Math.PI*1.35)*2.4-my*.8+drift;
+      const z=8-journey*125+entrance*44;
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(resolution,canvas.width,canvas.height);gl.uniform3f(camera,x,y,z);
       gl.uniform2f(rotation,Math.sin(journey*5.4)*.055+mx*.018,Math.cos(journey*3.7)*.035+my*.012);
-      gl.uniform1f(warp,smoothWarp);gl.uniform1f(time,tier==='reduced'?0:now);gl.drawArrays(gl.POINTS,0,count);
+      gl.uniform1f(warp,Math.min(.65,smoothWarp*.45+entrance*.55));gl.uniform1f(time,tier==='reduced'?0:now);gl.drawArrays(gl.POINTS,0,count);
       if (tier !== 'reduced') raf=requestAnimationFrame(draw);
     };
     const visibility=()=>{cancelAnimationFrame(raf);if(!document.hidden)raf=requestAnimationFrame(draw)};
