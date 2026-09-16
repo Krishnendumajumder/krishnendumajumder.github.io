@@ -1,12 +1,5 @@
-# Design references
+# Original orbital portfolio
 
-This portfolio uses original components inspired by the following references; no third-party component source was copied or installed.
+The current design is an original composition built around Krishnendu's remote-sensing work. It uses a custom canvas observation network, oversized editorial typography, alternating project features, and a contrasting contact section. No 21st.dev or React Bits component code or templates are used.
 
-- React Bits Spotlight Card: https://reactbits.dev/components/spotlight-card — pointer-following illumination adapted into SpotlightCard using CSS variables, with reduced-motion support.
-- React Bits Blur Text: https://reactbits.dev/text-animations/blur-text — inspiration for the staggered headline entrance, implemented with CSS.
-- 21st.dev Product Spotlight Hero: https://21st.dev/@chowlol202/components/product-spotlight-hero-section — split introduction and visual showcase composition.
-- 21st.dev spotlight performance guide: https://news.21st.dev/blog/react-spotlight-effect-components — direct CSS variable writes rather than per-movement React state updates.
-- Brittany Chiang: https://brittanychiang.com/ — clear professional narrative and project/experience hierarchy.
-- Bruno Simon: https://bruno-simon.com/ — memorable interaction connected to the developer's identity; translated here into an educational satellite workflow rather than a full 3D scene.
-
-The hero curves are illustrative, not measured results. Project claims remain grounded in the supplied CV. The star field and project diagrams are existing portfolio components, restyled and optimized for this revision.
+The earlier reference-inspired spotlight cards and signal chart are no longer rendered. Existing locally authored starfield, project diagrams, and accessible controls remain. The observation network is conceptual; it does not display live telemetry or measured project results. All project descriptions remain based on the supplied CV.

@@ -3,8 +3,8 @@ import { SiteExperience } from '@/components/SiteExperience';
 import { PhoneReveal } from '@/components/PhoneReveal';
 import { ProjectVisual } from '@/components/ProjectVisual';
 import { SkillConstellation } from '@/components/SkillConstellation';
-import { SpotlightCard } from '@/components/SpotlightCard';
-import { SignalStudio } from '@/components/SignalStudio';
+
+import { OrbitalAtlas } from '@/components/OrbitalAtlas';
 
 const projects = [
   { n:'01', kind:'crop' as const, type:'EARTH OBSERVATION', title:'Reading the earth. Predicting the crop.', name:'Satellite-Based Crop Classification & Prediction', text:'Following a field through its growth cycle. A multi-temporal workflow brings radar and multispectral imagery together to distinguish crop categories.', approach:'Extract satellite bands and vegetation indices using Google Earth Engine. Compare spectral and SAR features across growth stages, then use the temporal patterns for crop classification and prediction.', focus:'Temporal crop signatures', tags:['Python','Google Earth Engine','Sentinel-1 & 2'] },
@@ -25,17 +25,18 @@ export default function Home(){return <>
   <main id="main">
     <section id="home" data-section className="hero">
       <div className="hero-layout"><div className="hero-copy">
-        <Label><span className="tiny-orbit"/> AI / ML DEVELOPER</Label>
-        <p className="hero-kicker">HELLO, I’M KRISHNENDU MAJUMDER</p>
-        <h1><span className="intro-line">Finding patterns.</span><br/><span className="intro-line accent-line">Building</span><br/><span className="intro-line">possibilities.</span></h1>
+        <Label>PORTFOLIO / EARTH TO ALGORITHM</Label>
+        <p className="hero-kicker">KRISHNENDU MAJUMDER / AI & ML DEVELOPER</p>
+        <h1><span className="intro-line">Intelligence.</span><br/><span className="intro-line accent-line">In orbit.</span></h1>
         <p className="hero-intro">I turn satellite signals and complex data into intelligent workflows. Exploring the space between <strong>AI, earth observation, and real-world problems.</strong></p>
         <div className="hero-actions"><a className="button" href="#projects">Explore my work <ArrowUpRight size={19}/></a><a className="text-link" href="#contact">Get in touch <ArrowRight size={17}/></a></div>
         <div className="hero-location"><MapPin size={14}/> Kolkata, India <span/> Python · Data Science · Geospatial AI</div>
-      </div><SignalStudio/></div>
+      </div><OrbitalAtlas/></div>
       <div className="hero-footer"><a href="#projects"><span className="scroll-cue"><ArrowDown size={16}/></span> SCROLL TO EXPLORE</a><span>INDEPENDENT THINKING. APPLIED INTELLIGENCE.</span><div>{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}><Icon size={18}/></a>)}</div></div>
     </section>
 
-    <section id="projects" data-section className="section work-section reveal"><div className="section-heading"><div><Label>01 / SELECTED WORK</Label><h2>Curiosity, put to work<span>.</span></h2></div><p>Three ways of looking at the world.<br/>One drive to understand it better.</p></div><div className="projects">{projects.map(({n,kind,type,title,name,text,approach,focus,tags})=><SpotlightCard key={n} className={`project project-${kind}`}><div className="project-image"><div className="project-image-top"><span>{type}</span><span>PROJECT / {n}</span></div><ProjectVisual kind={kind}/><div className="project-image-bottom"><span>{focus}</span><span className="visual-note">WORKFLOW STUDY</span></div></div><div className="project-content"><div className="project-heading-row"><h3>{title}</h3><span className="project-index">/{n}</span></div><h4>{name}</h4><p>{text}</p><div className="tags">{tags.map(tag=><span key={tag}>{tag}</span>)}</div><details><summary>Explore the approach <span>+</span></summary><p>{approach}</p></details></div></SpotlightCard>)}</div></section>
+    <div className="discipline-strip" aria-label="Areas of work"><span>EARTH OBSERVATION</span><i>✳</i><span>MACHINE LEARNING</span><i>✳</i><span>OPTIMIZATION</span><i>✳</i><span>COMPUTER VISION</span></div>
+    <section id="projects" data-section className="section work-section reveal"><div className="section-heading"><div><Label>01 / SELECTED WORK</Label><h2>Ideas with<br/><span>gravity.</span></h2></div><p>Three ways of looking at the world.<br/>One drive to understand it better.</p></div><div className="projects">{projects.map(({n,kind,type,title,name,text,approach,focus,tags})=><article key={n} className={`project project-${kind}`}><div className="project-image"><div className="project-image-top"><span>{type}</span><span>PROJECT / {n}</span></div><ProjectVisual kind={kind}/><div className="project-image-bottom"><span>{focus}</span><span className="visual-note">WORKFLOW STUDY</span></div></div><div className="project-content"><div className="project-heading-row"><h3>{title}</h3><span className="project-index">/{n}</span></div><h4>{name}</h4><p>{text}</p><div className="tags">{tags.map(tag=><span key={tag}>{tag}</span>)}</div><details><summary>Explore the approach <span>+</span></summary><p>{approach}</p></details></div></article>)}</div></section>
 
     <section id="about" data-section className="section about reveal"><div><Label>02 / THE PERSON BEHIND THE CODE</Label><h2>Grounded in data.<br/><span>Looking further.</span></h2><div className="about-signature">Krishnendu Majumder <span>DEVELOPER & EXPLORER</span></div></div><div className="about-copy"><p className="large-copy">I’m drawn to questions that connect technology with the world outside the screen.</p><p>My computer science background led me to Python, machine learning, and satellite remote sensing. Working on agricultural AI gave that curiosity a practical direction: understanding fields, crop cycles, and the signals hidden in satellite data.</p><p>I enjoy learning by building, whether that means working with geospatial features, exploring computer vision, or modelling a better facility network.</p><div className="about-facts"><div><span>BASED IN</span><strong>Kolkata, India</strong></div><div><span>LANGUAGES</span><strong>English · Hindi · Bengali</strong></div></div></div></section>
 
