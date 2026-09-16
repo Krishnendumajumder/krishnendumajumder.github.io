@@ -17,7 +17,7 @@ export function SignalStudio() {
     <div className="signal-chart">
       <div className="chart-caption"><span>FROM SIGNAL</span><span>TO INSIGHT <ArrowUpRight size={14}/></span></div>
       <svg viewBox="0 0 480 280" role="img" aria-label="Illustrative temporal satellite signals. These curves demonstrate the workflow, not measured project results.">
-        <defs><linearGradient id="signal-fill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#b8f3cf" stopOpacity=".3"/><stop offset="1" stopColor="#b8f3cf" stopOpacity="0"/></linearGradient></defs>
+        <defs><linearGradient id="signal-fill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#e1b8f3" stopOpacity=".3"/><stop offset="1" stopColor="#e1b8f3" stopOpacity="0"/></linearGradient></defs>
         <g className="chart-grid"><path d="M20 40H460M20 90H460M20 140H460M20 190H460M20 240H460M60 25V255M150 25V255M240 25V255M330 25V255M420 25V255"/></g>
         <path className="signal-area" d="M20 219C65 218 65 180 106 174S158 205 197 129S267 53 296 80S350 125 385 89S431 52 460 42V255H20Z"/>
         <path className="signal-line primary" d="M20 219C65 218 65 180 106 174S158 205 197 129S267 53 296 80S350 125 385 89S431 52 460 42"/>
