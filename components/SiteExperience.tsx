@@ -1,13 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Pause, Play } from 'lucide-react';
 import { GalaxyScene } from './GalaxyScene';
 
 export function SiteExperience() {
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    document.documentElement.dataset.motion = paused ? 'paused' : 'running';
+    return () => { delete document.documentElement.dataset.motion; };
+  }, [paused]);
   useEffect(() => {
     const sections = [...document.querySelectorAll<HTMLElement>('[data-section]')];
     const nav = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav]')];
-    const reveal = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('is-visible')), { threshold: .12 });
+    document.documentElement.classList.add('motion-ready');
+    const reveal = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('is-visible')), { threshold: .05 });
     sections.forEach(section => reveal.observe(section));
     const active = new IntersectionObserver(entries => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -23,5 +30,5 @@ export function SiteExperience() {
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
     return () => { reveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); delete document.body.dataset.cosmicSection; };
   }, []);
-  return <GalaxyScene/>;
+  return <><GalaxyScene paused={paused}/><button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
 }

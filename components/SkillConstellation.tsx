@@ -16,7 +16,7 @@ export function SkillConstellation() {
   const [active, setActive] = useState<string | null>(null);
   return <div className="skill-constellation" onPointerLeave={() => setActive(null)}>
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">{lines.map(([a,b])=><line key={`${a}-${b}`} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} className={active && (nodes[a].group===active || nodes[b].group===active) ? 'connected' : ''}/>)}</svg>
-    {nodes.map((node,index)=><button key={node.name} type="button" style={{left:`${node.x}%`,top:`${node.y}%`}} className={active===node.group?'active':''} onPointerEnter={()=>setActive(node.group)} onFocus={()=>setActive(node.group)} onClick={()=>setActive(active===node.group?null:node.group)} aria-pressed={active===node.group}><span>{String(index+1).padStart(2,'0')}</span>{node.name}</button>)}
+    {nodes.map((node,index)=><button key={node.name} type="button" style={{left:`${node.x}%`,top:`${node.y}%`}} className={active===node.group?'active':''} onPointerEnter={event=>{if(event.pointerType==='mouse')setActive(node.group)}} onFocus={()=>setActive(node.group)} onClick={()=>setActive(node.group)} aria-pressed={active===node.group}><span>{String(index+1).padStart(2,'0')}</span>{node.name}</button>)}
     <div className="constellation-core" aria-hidden="true"><i/>AI · DATA</div>
     <p>Hover, focus, or tap a skill to trace related capabilities.</p>
   </div>;

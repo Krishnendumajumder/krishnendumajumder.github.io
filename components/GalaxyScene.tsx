@@ -84,11 +84,12 @@ function createStars(count: number) {
   return data;
 }
 
-export function GalaxyScene() {
+export function GalaxyScene({ paused = false }: { paused?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const velocity = useRef(0);
-  const tier = usePerformanceTier();
+  const performanceTier = usePerformanceTier();
+  const tier = paused ? 'reduced' : performanceTier;
   const mouse = useMouseParallax(tier === 'desktop');
   const trackScroll = useCallback((p: number, v: number) => { progress.current = p; velocity.current = v; }, []);
   useScrollProgress(trackScroll);
@@ -104,7 +105,7 @@ export function GalaxyScene() {
     gl.linkProgram(program);
     const activate = gl.useProgram.bind(gl);
     activate(program);
-    const count = tier === 'desktop' ? 9200 : tier === 'mobile' ? 4300 : 2200;
+    const count = tier === 'desktop' ? 4800 : tier === 'mobile' ? 1800 : 1200;
     const data = createStars(count);
     const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
     const stride = 7 * 4;
@@ -113,8 +114,9 @@ export function GalaxyScene() {
     const resolution=gl.getUniformLocation(program,'uResolution'), camera=gl.getUniformLocation(program,'uCamera'), rotation=gl.getUniformLocation(program,'uRotation'), warp=gl.getUniformLocation(program,'uWarp'), time=gl.getUniformLocation(program,'uTime');
     gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.disable(gl.DEPTH_TEST);
     let raf=0, mx=0, my=0, smoothP=progress.current, smoothWarp=0;
-    const resize=()=>{const dpr=Math.min(window.devicePixelRatio,tier==='desktop'?1.5:1);canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);gl.viewport(0,0,canvas.width,canvas.height)};
+    const resize=()=>{const dpr=Math.min(window.devicePixelRatio,tier==='desktop'?1.5:1);canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);gl.viewport(0,0,canvas.width,canvas.height);cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)};
     const draw=(now:number)=>{
+      if (document.hidden) return;
       smoothP += (progress.current-smoothP)*(tier==='reduced'?1:.045);
       smoothWarp += ((tier==='reduced'?0:velocity.current)-smoothWarp)*.07;
       mx += (mouse.current.x-mx)*.025; my += (mouse.current.y-my)*.025;
@@ -125,11 +127,12 @@ export function GalaxyScene() {
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(resolution,canvas.width,canvas.height);gl.uniform3f(camera,x,y,z);
       gl.uniform2f(rotation,Math.sin(journey*5.4)*.055+mx*.018,Math.cos(journey*3.7)*.035+my*.012);
-      gl.uniform1f(warp,smoothWarp);gl.uniform1f(time,now);gl.drawArrays(gl.POINTS,0,count);
-      raf=requestAnimationFrame(draw);
+      gl.uniform1f(warp,smoothWarp);gl.uniform1f(time,tier==='reduced'?0:now);gl.drawArrays(gl.POINTS,0,count);
+      if (tier !== 'reduced') raf=requestAnimationFrame(draw);
     };
-    resize(); window.addEventListener('resize',resize,{passive:true}); raf=requestAnimationFrame(draw);
-    return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);gl.deleteBuffer(buffer);gl.deleteProgram(program)};
+    const visibility=()=>{cancelAnimationFrame(raf);if(!document.hidden)raf=requestAnimationFrame(draw)};
+    resize(); window.addEventListener('resize',resize,{passive:true}); document.addEventListener('visibilitychange',visibility);
+    return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);document.removeEventListener('visibilitychange',visibility);gl.deleteBuffer(buffer);gl.deleteProgram(program)};
   }, [tier, mouse]);
 
   return <div className="cosmos" aria-hidden="true">
