@@ -12,7 +12,6 @@ attribute vec3 aColor;
 uniform vec2 uResolution;
 uniform vec3 uCamera;
 uniform vec2 uRotation;
-uniform vec2 uPointer;
 uniform float uWarp;
 uniform float uTime;
 varying vec3 vColor;
@@ -33,18 +32,11 @@ void main() {
   float depth = max(1.0, -p.z);
   vec2 projected = p.xy / depth;
   projected.x *= uResolution.y/uResolution.x;
-  vec2 screen = projected*1.7;
-  vec2 delta = uPointer-screen;
-  float pointerDistance = length(delta);
-  float gravity = smoothstep(.62,.035,pointerDistance);
-  vec2 pull = delta/max(pointerDistance,.025) * gravity * .115;
-  vec2 swirl = vec2(-delta.y,delta.x) * gravity * .13;
-  screen += pull+swirl;
-  gl_Position = vec4(screen, 0.0, 1.0);
+  gl_Position = vec4(projected*1.7, 0.0, 1.0);
   float pulse = .88 + .12*sin(uTime*.0007 + aPosition.x*2.3);
-  gl_PointSize = min(14.0, aSize * pulse * (135.0/depth) * (1.0+uWarp*2.35+gravity*.75));
+  gl_PointSize = min(14.0, aSize * pulse * (135.0/depth) * (1.0+uWarp*2.35));
   vColor = aColor;
-  vAlpha = (1.0-smoothstep(135.0,190.0,depth)) * smoothstep(.2,2.0,gl_PointSize) * (1.0+gravity*.35);
+  vAlpha = (1.0-smoothstep(135.0,190.0,depth)) * smoothstep(.2,2.0,gl_PointSize);
 }`;
 const fragment = `
 precision mediump float;
@@ -119,8 +111,9 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
     const stride = 7 * 4;
     const bind = (name: string, size: number, offset: number) => { const loc=gl.getAttribLocation(program,name); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,size,gl.FLOAT,false,stride,offset); };
     bind('aPosition',3,0); bind('aSize',1,12); bind('aColor',3,16);
-    const resolution=gl.getUniformLocation(program,'uResolution'), camera=gl.getUniformLocation(program,'uCamera'), rotation=gl.getUniformLocation(program,'uRotation'), pointer=gl.getUniformLocation(program,'uPointer'), warp=gl.getUniformLocation(program,'uWarp'), time=gl.getUniformLocation(program,'uTime');
+    const resolution=gl.getUniformLocation(program,'uResolution'), camera=gl.getUniformLocation(program,'uCamera'), rotation=gl.getUniformLocation(program,'uRotation'), warp=gl.getUniformLocation(program,'uWarp'), time=gl.getUniformLocation(program,'uTime');
     gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); gl.disable(gl.DEPTH_TEST);
+    const cosmos = canvas.parentElement;
     let raf=0, mx=0, my=0, smoothP=progress.current, smoothWarp=0;
     const resize=()=>{const dpr=Math.min(window.devicePixelRatio,tier==='desktop'?1.5:1);canvas.width=Math.round(innerWidth*dpr);canvas.height=Math.round(innerHeight*dpr);gl.viewport(0,0,canvas.width,canvas.height);cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)};
     const draw=(now:number)=>{
@@ -129,35 +122,37 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
       const entrance = tier === 'reduced' ? 0 : Math.pow(1 - Math.min(1, (now-introStart.current)/2600), 3);
       smoothP += (progress.current-smoothP)*(tier==='reduced'?1:.045);
       smoothWarp += ((tier==='reduced'?0:velocity.current)-smoothWarp)*.07;
-      mx += (mouse.current.x-mx)*.075; my += (mouse.current.y-my)*.075;
+      mx += (mouse.current.x-mx)*.065; my += (mouse.current.y-my)*.065;
       const journey=tier==='reduced'?.08:smoothP;
-      const x=Math.sin(journey*Math.PI*2.1)*3.2+mx*2.8;
+      const x=Math.sin(journey*Math.PI*2.1)*3.2-mx*11.5;
       const drift = tier === 'reduced' ? 0 : Math.sin(now*.00008)*.8;
-      const y=Math.sin(journey*Math.PI*1.35)*2.4-my*1.8+drift;
+      const y=Math.sin(journey*Math.PI*1.35)*2.4-my*8+drift;
       const z=8-journey*125+entrance*44;
+      cosmos?.style.setProperty('--field-x',`${mx*72}px`);
+      cosmos?.style.setProperty('--field-y',`${my*56}px`);
+      cosmos?.style.setProperty('--field-x-soft',`${mx*38}px`);
+      cosmos?.style.setProperty('--field-y-soft',`${my*30}px`);
+      cosmos?.style.setProperty('--field-x-reverse',`${mx*-24}px`);
+      cosmos?.style.setProperty('--field-y-reverse',`${my*-18}px`);
       gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(resolution,canvas.width,canvas.height);gl.uniform3f(camera,x,y,z);
-      gl.uniform2f(pointer,mx*2,-my*2);
-      gl.uniform2f(rotation,Math.sin(journey*5.4)*.055+mx*.018,Math.cos(journey*3.7)*.035+my*.012);
+      gl.uniform2f(rotation,Math.sin(journey*5.4)*.055-mx*.09,Math.cos(journey*3.7)*.035+my*.07);
       gl.uniform1f(warp,Math.min(.65,smoothWarp*.45+entrance*.55));gl.uniform1f(time,tier==='reduced'?0:now);gl.drawArrays(gl.POINTS,0,count);
       if (tier !== 'reduced') raf=requestAnimationFrame(draw);
     };
     const visibility=()=>{cancelAnimationFrame(raf);if(!document.hidden)raf=requestAnimationFrame(draw)};
-    const move=(event:PointerEvent)=>{canvas.parentElement?.style.setProperty('--cursor-x',`${event.clientX}px`);canvas.parentElement?.style.setProperty('--cursor-y',`${event.clientY}px`);canvas.parentElement?.classList.add('cursor-active')};
-    const leave=()=>canvas.parentElement?.classList.remove('cursor-active');
     resize(); window.addEventListener('resize',resize,{passive:true}); document.addEventListener('visibilitychange',visibility);
-    if(tier==='desktop'){window.addEventListener('pointermove',move,{passive:true});document.documentElement.addEventListener('mouseleave',leave)}
-    return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);window.removeEventListener('pointermove',move);document.documentElement.removeEventListener('mouseleave',leave);document.removeEventListener('visibilitychange',visibility);gl.deleteBuffer(buffer);gl.deleteProgram(program)};
+    return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);document.removeEventListener('visibilitychange',visibility);cosmos?.style.removeProperty('--field-x');cosmos?.style.removeProperty('--field-y');cosmos?.style.removeProperty('--field-x-soft');cosmos?.style.removeProperty('--field-y-soft');cosmos?.style.removeProperty('--field-x-reverse');cosmos?.style.removeProperty('--field-y-reverse');gl.deleteBuffer(buffer);gl.deleteProgram(program)};
   }, [tier, mouse]);
 
   return <div className="cosmos" aria-hidden="true">
     <div className="section-auras"><i className="aura aura-home"/><i className="aura aura-skills"/><i className="aura aura-projects"/><i className="aura aura-contact"/></div>
-    <canvas ref={canvasRef}/><span className="cursor-gravity"/>
+    <canvas ref={canvasRef}/>
     <svg className="cosmic-constellations" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice">
       <g className="constellation-shape constellation-one"><path d="M80 190L155 128L230 205L315 112L388 174"/><circle cx="80" cy="190" r="3"/><circle cx="155" cy="128" r="4"/><circle cx="230" cy="205" r="3"/><circle cx="315" cy="112" r="4"/><circle cx="388" cy="174" r="3"/></g>
       <g className="constellation-shape constellation-two"><path d="M650 495L724 410L802 470L878 366L950 438M724 410L878 366"/><circle cx="650" cy="495" r="3"/><circle cx="724" cy="410" r="4"/><circle cx="802" cy="470" r="3"/><circle cx="878" cy="366" r="4"/><circle cx="950" cy="438" r="3"/></g>
     </svg>
     <div className="shooting-stars"><i/><i/><i/></div>
-    <div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="nebula nebula-c"/><div className="cosmic-horizon"/>
+    <div className="nebula-field"><div className="nebula nebula-a"/><div className="nebula nebula-b"/><div className="nebula nebula-c"/></div><div className="cosmic-horizon"/>
   </div>;
 }
