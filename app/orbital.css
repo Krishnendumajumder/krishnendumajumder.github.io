@@ -62,3 +62,12 @@ h2 span,.project h4,.timeline h4,.role-mark,.about-signature,.education-list spa
 .contact{background:linear-gradient(118deg,#ff6a44 0%,#ff8352 48%,#ffc857 100%);color:#170800;box-shadow:inset 0 30px 100px #ff31531f}.contact h2 span{color:#341209}.contact .eyebrow,.contact-heading>span,.contact-grid p,.contact-bottom{color:#5b2214}.email{color:#170800;border-color:#43140680}.contact-socials a,.phone-symbol{color:#211007;border-color:#43140680}.contact-socials a:hover,.phone-symbol:hover{background:#07132a;color:#fff;border-color:#07132a}
 .motion-control{background:#081329ef;color:#fff;border-color:#32ddff7a;box-shadow:0 0 24px #32ddff24}.scroll-orbit{border-color:#ff744d9c;box-shadow:0 0 22px #ff744d24}.scroll-orbit__core{background:var(--coral);box-shadow:0 0 20px var(--coral)}.scroll-orbit__satellite{background:var(--cyan);box-shadow:0 0 18px var(--cyan)}.scroll-readout strong{color:var(--coral)}.scroll-readout b{color:var(--cyan)}
 @media(max-width:800px){.cosmos canvas{opacity:.78}.discipline-strip{background:linear-gradient(135deg,#071a34,#17103a)}header nav{background:#040817f7;border-color:#32ddff35}}
+
+/* Cursor gravity field: stars bend and brighten around the pointer. */
+.cursor-gravity{position:fixed;left:var(--cursor-x,50vw);top:var(--cursor-y,50vh);width:190px;height:190px;border-radius:50%;z-index:2;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.72);transition:opacity .28s,transform .28s;background:radial-gradient(circle,#ffffff22 0 1px,#32ddff1f 2px,transparent 43%),conic-gradient(from 30deg,transparent,#32ddff20,transparent,#9b6cff22,transparent);border:1px solid #7cecff22;box-shadow:inset 0 0 42px #32ddff0d,0 0 55px #714cff16;mix-blend-mode:screen}
+.cursor-gravity:before,.cursor-gravity:after{content:"";position:absolute;border-radius:50%;inset:22px;border:1px dashed #78e9ff38;animation:cursor-field-spin 12s linear infinite}
+.cursor-gravity:after{inset:55px;border-style:solid;border-color:#ff744d4d;animation-direction:reverse;animation-duration:7s}
+.cosmos.cursor-active .cursor-gravity{opacity:.72;transform:translate(-50%,-50%) scale(1)}
+@keyframes cursor-field-spin{to{rotate:360deg}}
+@media(pointer:coarse){.cursor-gravity{display:none}}
+@media(prefers-reduced-motion:reduce){.cursor-gravity{display:none}}
