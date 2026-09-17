@@ -35,11 +35,16 @@ export function SiteExperience() {
     sections.forEach(section => active.observe(section));
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - innerHeight;
-      document.documentElement.style.setProperty('--scroll', `${Math.max(0, scrollY / Math.max(1,max)) * 100}%`);
+      const progress = Math.max(0, scrollY / Math.max(1,max));
+      document.documentElement.style.setProperty('--scroll', `${progress * 100}%`);
+      document.documentElement.style.setProperty('--scroll-progress', `${progress}`);
+      document.documentElement.style.setProperty('--scroll-angle', `${progress * 360}deg`);
+      const readout = document.querySelector<HTMLElement>('.scroll-readout b');
+      if (readout) readout.textContent = String(Math.round(progress * 100)).padStart(2, '0');
       document.body.classList.toggle('scrolled', scrollY > 24);
     };
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
     return () => { reveal.disconnect(); itemReveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); document.documentElement.classList.remove('motion-ready'); items.forEach(item => item.classList.remove('scroll-reveal', 'in-view')); delete document.body.dataset.cosmicSection; };
   }, []);
-  return <><GalaxyScene paused={paused}/><button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
+  return <><GalaxyScene paused={paused}/><div className="scroll-orbit" aria-hidden="true"><span className="scroll-orbit__core"/><span className="scroll-orbit__satellite"/></div><div className="scroll-readout" aria-hidden="true"><span>FIELD MOTION</span><strong>SCROLL / <b>00</b></strong></div><button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
 }
