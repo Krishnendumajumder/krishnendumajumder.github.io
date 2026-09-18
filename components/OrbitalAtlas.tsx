@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 const modes = [
  {name:'OBSERVE',color:'#85c9ff',title:'Start with a different perspective.',text:'Sentinel-1 radar and Sentinel-2 multispectral imagery reveal changes across the ground.'},
  {name:'CONNECT',color:'#bb9aff',title:'Find the pattern between the points.',text:'Satellite bands, vegetation indices, and time turn observations into meaningful features.'},
- {name:'PREDICT',color:'#ffb28b',title:'Turn patterns into possibilities.',text:'Machine-learning workflows connect temporal features with crop classification and prediction.'},
+ {name:'PREDICT',color:'#ff4fd8',title:'Turn patterns into possibilities.',text:'Machine-learning workflows connect temporal features with crop classification and prediction.'},
 ];
 export function OrbitalAtlas(){
  const canvas=useRef<HTMLCanvasElement>(null); const [mode,setMode]=useState(0);

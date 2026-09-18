@@ -62,3 +62,16 @@ h2 span,.project h4,.timeline h4,.role-mark,.about-signature,.education-list spa
 .contact{background:linear-gradient(118deg,#ff6a44 0%,#ff8352 48%,#ffc857 100%);color:#170800;box-shadow:inset 0 30px 100px #ff31531f}.contact h2 span{color:#341209}.contact .eyebrow,.contact-heading>span,.contact-grid p,.contact-bottom{color:#5b2214}.email{color:#170800;border-color:#43140680}.contact-socials a,.phone-symbol{color:#211007;border-color:#43140680}.contact-socials a:hover,.phone-symbol:hover{background:#07132a;color:#fff;border-color:#07132a}
 .motion-control{background:#081329ef;color:#fff;border-color:#32ddff7a;box-shadow:0 0 24px #32ddff24}.scroll-orbit{border-color:#ff744d9c;box-shadow:0 0 22px #ff744d24}.scroll-orbit__core{background:var(--coral);box-shadow:0 0 20px var(--coral)}.scroll-orbit__satellite{background:var(--cyan);box-shadow:0 0 18px var(--cyan)}.scroll-readout strong{color:var(--coral)}.scroll-readout b{color:var(--cyan)}
 @media(max-width:800px){.cosmos canvas{opacity:.78}.discipline-strip{background:linear-gradient(135deg,#071a34,#17103a)}header nav{background:#040817f7;border-color:#32ddff35}}
+
+/* Electric spectrum: vivid magenta, ultraviolet, and cyan without orange tones. */
+:root,.dark{--accent:#ff4fd8;--coral:#ff4fd8;--gold:#72f1ff;--section-accent:var(--cyan)}
+body[data-cosmic-section="about"],body[data-cosmic-section="experience"]{--section-accent:#ff4fd8}
+body[data-cosmic-section="education"]{--section-accent:#72f1ff}
+.scroll-line{background:linear-gradient(90deg,var(--cyan),var(--violet),#ff4fd8,#7a5cff,#72f1ff)}
+h1 .accent-line{background:linear-gradient(100deg,var(--cyan) 0%,#6da8ff 25%,var(--violet) 52%,#ff4fd8 78%,#a855f7 100%);background-clip:text;-webkit-background-clip:text}
+.button{background:linear-gradient(110deg,#ff4fd8,#8b5cf6 55%,#32ddff);color:#fff;box-shadow:0 12px 40px #9b6cff42}.button:hover{background:linear-gradient(110deg,#ff79e5,#a878ff 55%,#72f1ff);box-shadow:0 16px 48px #b05cff66}
+.discipline-strip i{color:#72f1ff;text-shadow:0 0 20px #32ddff}
+.project-tower .project-image{background:radial-gradient(ellipse at 50% 60%,#d946ef8f,transparent 70%),linear-gradient(145deg,#240d3f,#0e0a24);border-color:#ff4fd87a!important;box-shadow:0 30px 90px #a855f72b,inset 0 0 55px #ff4fd812}
+.about{border-color:#ff4fd852}.timeline article{border-color:#ff4fd842}.orbital-timeline:before{background:linear-gradient(transparent,#ff4fd8,#72f1ff,transparent)}.timeline article:after{background:#ff4fd8;box-shadow:0 0 17px #ff4fd8}
+.contact{background:linear-gradient(118deg,#250858 0%,#6d28d9 48%,#009bd6 100%);color:#fff;box-shadow:inset 0 30px 110px #09021752}.contact h2 span{color:#8ef7ff}.contact .eyebrow,.contact-heading>span,.contact-grid p,.contact-bottom{color:#d9e8ff}.email{color:#fff;border-color:#8ef7ff99}.email:hover{color:#8ef7ff}.contact-bottom{border-color:#b8dfff4d}.contact-socials a,.phone-symbol{color:#fff;border-color:#d7e7ff70}.contact-socials a:hover,.phone-symbol:hover{background:#fff;color:#2a0b61;border-color:#fff}.revealed-phones,.contact-socials .revealed-phones{background:#08051f;color:#eaf8ff;border-color:#72f1ff66}.revealed-phones a,.contact-socials .revealed-phones a{color:#eaf8ff}
+.scroll-orbit{border-color:#ff4fd8a8;box-shadow:0 0 22px #ff4fd83d}.scroll-orbit__core{background:#ff4fd8;box-shadow:0 0 20px #ff4fd8}.scroll-readout strong{color:#ff4fd8}
