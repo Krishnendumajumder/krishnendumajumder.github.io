@@ -1,5 +1,5 @@
 .project-journey{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.07fr);gap:7%;position:relative;--case-color:#52e4ff;--case-progress:0;align-items:start}
-body[data-cosmic-section='projects'] .cosmos canvas{opacity:.3}
+body[data-cosmic-section='projects'] .cosmos canvas{animation:none;opacity:.3}
 .project-observer{position:sticky;top:116px;align-self:start;min-width:0;background:linear-gradient(145deg,#101833f2,#080b1bf5);border:1px solid #809ac140;box-shadow:0 25px 80px #02051188;overflow:hidden}
 .project-observer__header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:23px 24px;border-bottom:1px solid #809ac130;font:12px/1.5 var(--font-geist-mono),monospace;letter-spacing:.06em;color:#b7c6df}
 .project-observer__header>span:last-child{font-size:22px;color:var(--case-color)}.observer-total{color:#7789a8;font-size:14px}
