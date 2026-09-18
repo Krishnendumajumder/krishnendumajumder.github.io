@@ -1,16 +1,11 @@
 import { ArrowDown, ArrowUpRight, Code2, Users, MapPin, Satellite, Cpu, Network, ArrowRight } from 'lucide-react';
 import { SiteExperience } from '@/components/SiteExperience';
 import { PhoneReveal } from '@/components/PhoneReveal';
-import { ProjectVisual } from '@/components/ProjectVisual';
+import { ProjectJourney } from '@/components/ProjectJourney';
 import { SkillConstellation } from '@/components/SkillConstellation';
 
 import { OrbitalAtlas } from '@/components/OrbitalAtlas';
 
-const projects = [
-  { n:'01', kind:'crop' as const, type:'EARTH OBSERVATION', title:'Reading the earth. Predicting the crop.', name:'Satellite-Based Crop Classification & Prediction', text:'Following a field through its growth cycle. A multi-temporal workflow brings radar and multispectral imagery together to distinguish crop categories.', approach:'Extract satellite bands and vegetation indices using Google Earth Engine. Compare spectral and SAR features across growth stages, then use the temporal patterns for crop classification and prediction.', focus:'Temporal crop signatures', tags:['Python','Google Earth Engine','Sentinel-1 & 2'] },
-  { n:'02', kind:'tower' as const, type:'COMPUTER VISION', title:'A closer look at critical infrastructure.', name:'Transmission Tower Detection & Thermal Distress Monitoring', text:'Combining RGB, thermal, and 3D information to explore transmission tower detection, thermal anomalies, and nearby vegetation.', approach:'Detect transmission infrastructure, analyze thermal anomalies and tower condition, and consider vegetation growth around towers to support maintenance analysis.', focus:'Infrastructure condition analysis', tags:['RGB & thermal','3D data','Vegetation monitoring'] },
-  { n:'03', kind:'network' as const, type:'OPTIMIZATION', title:'The right location. A better network.', name:'P-Median Facility Location Optimization', text:'Where should three warehouses serve a nine-city network? A mixed integer programming model turns demand and distance into facility decisions.', approach:'Model facility openings and customer assignments as binary variables in OPL. Require exactly three open warehouses and one warehouse assignment per customer, using demand and inter-city distance data.', focus:'9 cities · 3 facilities', tags:['IBM CPLEX','OPL','Mixed Integer Programming'] },
-];
 const socialLinks = [
   { label:'GitHub', href:'https://github.com/Krishnendumajumder', Icon:Code2 },
   { label:'LinkedIn', href:'https://www.linkedin.com/in/krishnendu-majumder-a376b83a8', Icon:Users },
@@ -36,7 +31,7 @@ export default function Home(){return <>
     </section>
 
     <div className="discipline-strip" aria-label="Areas of work"><span>EARTH OBSERVATION</span><i>✳</i><span>MACHINE LEARNING</span><i>✳</i><span>OPTIMIZATION</span><i>✳</i><span>COMPUTER VISION</span></div>
-    <section id="projects" data-section className="section work-section reveal"><div className="section-heading"><div><Label>01 / SELECTED WORK</Label><h2>Ideas with<br/><span>gravity.</span></h2></div><p>Three ways of looking at the world.<br/>One drive to understand it better.</p></div><div className="projects">{projects.map(({n,kind,type,title,name,text,approach,focus,tags})=><article key={n} className={`project project-${kind}`}><div className="project-image"><div className="project-image-top"><span>{type}</span><span>PROJECT / {n}</span></div><ProjectVisual kind={kind}/><div className="project-image-bottom"><span>{focus}</span><span className="visual-note">WORKFLOW STUDY</span></div></div><div className="project-content"><div className="project-heading-row"><h3>{title}</h3><span className="project-index">/{n}</span></div><h4>{name}</h4><p>{text}</p><div className="tags">{tags.map(tag=><span key={tag}>{tag}</span>)}</div><details><summary>Explore the approach <span>+</span></summary><p>{approach}</p></details></div></article>)}</div></section>
+    <section id="projects" data-section className="section work-section"><div className="section-heading"><div><Label>01 / SELECTED WORK</Label><h2>From observation<br/><span>to a decision.</span></h2></div><p>Three projects, explained through their inputs, methods, and outputs.</p></div><ProjectJourney/></section>
 
     <section id="about" data-section className="section about reveal"><div><Label>02 / THE PERSON BEHIND THE CODE</Label><h2>Grounded in data.<br/><span>Looking further.</span></h2><div className="about-signature">Krishnendu Majumder <span>DEVELOPER & EXPLORER</span></div></div><div className="about-copy"><p className="large-copy">I’m drawn to questions that connect technology with the world outside the screen.</p><p>My computer science background led me to Python, machine learning, and satellite remote sensing. Working on agricultural AI gave that curiosity a practical direction: understanding fields, crop cycles, and the signals hidden in satellite data.</p><p>I enjoy learning by building, whether that means working with geospatial features, exploring computer vision, or modelling a better facility network.</p><div className="about-facts"><div><span>BASED IN</span><strong>Kolkata, India</strong></div><div><span>LANGUAGES</span><strong>English · Hindi · Bengali</strong></div></div></div></section>
 
