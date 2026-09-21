@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ProjectVisual } from './ProjectVisual';
 import './project-journey.css';
 
 const cases = [
@@ -65,9 +66,20 @@ export function ProjectJourney() {
     const el = root.current;
     if (!el) return;
     const articles = [...el.querySelectorAll<HTMLElement>('[data-case]')];
+    const scenes = [...el.querySelectorAll<HTMLElement>('.project-motion-scene')];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const visibility = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('scene-visible', entry.isIntersecting)), { threshold: .1 });
+    scenes.forEach(scene => visibility.observe(scene));
     let frame = 0;
     const update = () => {
       frame = 0;
+      if (!reduced.matches && document.documentElement.dataset.motion !== 'paused') {
+        scenes.forEach(scene => {
+          const bounds = scene.getBoundingClientRect();
+          const travel = Math.max(0, Math.min(1, (innerHeight * .85 - bounds.top) / (innerHeight * .6 + bounds.height * .4)));
+          scene.style.setProperty('--scene-progress', String(travel));
+        });
+      }
       const readingLine = innerHeight * .52;
       let index = 0;
       for (let i = 0; i < articles.length; i++) {
@@ -85,7 +97,7 @@ export function ProjectJourney() {
     update();
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('resize', schedule, { passive: true });
-    return () => { cancelAnimationFrame(frame); resize.disconnect(); removeEventListener('scroll', schedule); removeEventListener('resize', schedule); };
+    return () => { cancelAnimationFrame(frame); resize.disconnect(); visibility.disconnect(); removeEventListener('scroll', schedule); removeEventListener('resize', schedule); };
   }, []);
 
   const current = cases[position.index];
@@ -105,6 +117,11 @@ export function ProjectJourney() {
     <div className="case-studies">{cases.map((project) => <article id={`project-${project.id}`} key={project.id} data-case className="case-study" style={{ '--case-color': project.color } as CSSProperties}>
       <div className="case-study__label"><span>PROJECT {project.number}</span><span>{project.category}</span></div>
       <h3>{project.title}</h3><p className="case-question">{project.question}</p><p className="case-context">{project.context}</p>
+      <figure className={`project-motion-scene motion-${project.id}`}>
+        <div className="project-motion-header"><span>{project.id === 'crop' ? 'TEMPORAL FIELD SCAN' : project.id === 'tower' ? 'STRUCTURE & CONDITION' : 'DEMAND → FACILITIES'}</span><span aria-hidden="true">/{project.number}</span></div>
+        <ProjectVisual kind={project.id}/>
+        <figcaption>Illustrative workflow · scroll to explore</figcaption>
+      </figure>
       <div className="case-mobile-diagram"><Workflow project={project}/><p>Workflow illustration · not live measurements</p></div>
       <dl className="case-method"><div><dt><span>01</span> Input</dt><dd>{project.input}</dd></div><div><dt><span>02</span> Method</dt><dd>{project.method}</dd></div><div><dt><span>03</span> Output</dt><dd>{project.output}</dd></div></dl>
       <ul className="case-tools" aria-label="Tools and disciplines">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
