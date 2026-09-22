@@ -22,8 +22,8 @@ html[data-motion='paused'] .workflow-panel,html[data-motion='paused'] .workflow-
 .workflow-map__axis,.workflow-node__index,.workflow-node>span:last-child,.workflow-map__footer,.project-observer__header,.case-study__label{font-size:12px}
 .workflow-node strong{font-size:14px;overflow-wrap:anywhere}
 
-/* Project-specific diagrams: scroll controls the scan, visibility controls loops. */
-.project-motion-scene{--scene-progress:.5;position:relative;isolation:isolate;margin:28px 0 32px;padding:18px 20px 14px;border:1px solid color-mix(in srgb,var(--case-color) 38%,transparent);background:radial-gradient(ellipse at 50% 75%,color-mix(in srgb,var(--case-color) 12%,transparent),transparent 75%),#080e20;overflow:hidden;box-shadow:0 20px 55px #0003}
+/* Project-specific diagrams: gentle time-based loops, paused when offscreen. */
+.project-motion-scene{position:relative;isolation:isolate;margin:28px 0 32px;padding:18px 20px 14px;border:1px solid color-mix(in srgb,var(--case-color) 38%,transparent);background:radial-gradient(ellipse at 50% 75%,color-mix(in srgb,var(--case-color) 12%,transparent),transparent 75%),#080e20;overflow:hidden;box-shadow:0 20px 55px #0003}
 .project-motion-header{display:flex;justify-content:space-between;gap:12px;font:12px/1.5 var(--font-geist-mono),monospace;color:var(--case-color);letter-spacing:.05em}
 .project-motion-scene .project-visual{height:200px;margin:18px 0 12px;border:0;background:none;overflow:hidden}
 .project-motion-scene .project-visual svg{height:100%;display:block}
@@ -31,17 +31,30 @@ html[data-motion='paused'] .workflow-panel,html[data-motion='paused'] .workflow-
 .project-motion-scene figcaption{font-size:12px;line-height:1.6;color:#9ab2d2;border-top:1px solid #8ca9d22d;padding-top:10px}
 .project-motion-scene svg *{animation-play-state:paused}
 .project-motion-scene.scene-visible svg *{animation-play-state:running}
-.project-motion-scene .crop-scan{animation:none;transform:translateX(calc(var(--scene-progress) * 230px));fill:#52e4ff16;stroke:#52e4ff;filter:drop-shadow(0 0 4px #52e4ff80)}
-.project-motion-scene .classified rect{fill:#52e4ff22;stroke:#52e4ff;animation:project-field-light 3.6s ease-in-out infinite;animation-play-state:paused}
+.project-motion-scene .crop-scan{animation:project-crop-sweep 9s ease-in-out infinite;animation-play-state:paused;fill:#52e4ff16;stroke:#52e4ff;filter:drop-shadow(0 0 4px #52e4ff80)}
+.project-motion-scene .classified rect{fill:#52e4ff22;stroke:#52e4ff;animation:project-field-light 7s ease-in-out infinite;animation-play-state:paused}
 .project-motion-scene .classified rect:nth-child(2){animation-delay:.6s}.project-motion-scene .classified rect:nth-child(3){animation-delay:1.2s}
-.project-motion-scene .thermal-scan{animation:none;transform:translateY(calc(var(--scene-progress) * 105px));stroke:var(--case-color);filter:drop-shadow(0 0 5px var(--case-color))}
-.project-motion-scene .tower{stroke-dasharray:600;stroke-dashoffset:calc(240 - var(--scene-progress) * 240)}
+.project-motion-scene .thermal-scan{animation:project-tower-sweep 8s ease-in-out infinite;animation-play-state:paused;stroke:var(--case-color);filter:drop-shadow(0 0 5px var(--case-color))}
+.project-motion-scene .tower{stroke-dasharray:none;stroke-dashoffset:0}
 .project-motion-scene .heat{fill:var(--case-color);filter:drop-shadow(0 0 6px var(--case-color))}
-.project-motion-scene .connections{opacity:calc(.25 + var(--scene-progress) * .75)}
+.project-motion-scene .connections{opacity:.65}
 .project-motion-scene .connections path{stroke:var(--case-color);stroke-width:1.5}
 .project-motion-scene .nodes .selected{fill:var(--case-color);stroke:#eee5ff}
 .project-motion-scene.scene-visible .classified rect{animation-play-state:running}
-@keyframes project-field-light{0%,100%{opacity:.3}45%,65%{opacity:1;filter:drop-shadow(0 0 5px #52e4ff80)}}
+@keyframes project-field-light{0%,100%{opacity:.3}50%{opacity:.8}}
 html[data-motion='paused'] .project-motion-scene svg *{animation-play-state:paused!important}
 @media(prefers-reduced-motion:reduce){.project-motion-scene svg *{animation:none!important;transition:none!important}.project-motion-scene .classified rect{opacity:1}}
 @media(max-width:480px){.project-motion-scene{padding:15px 12px 12px}.project-motion-scene .project-visual{height:170px}.project-motion-header{font-size:12px;letter-spacing:0}}
+
+/* Matched endpoints and soft easing prevent visible jumps between cycles. */
+.project-motion-scene .satellite{animation:project-satellite-drift 14s ease-in-out infinite;animation-play-state:paused}
+.project-motion-scene .heat{animation:project-soft-pulse 6s ease-in-out infinite;animation-play-state:paused;transform-box:fill-box;transform-origin:center}
+.project-motion-scene .nodes .selected{animation:project-soft-pulse 7s ease-in-out infinite;animation-play-state:paused;transform-box:fill-box;transform-origin:center}
+.project-motion-scene .connections path{animation:project-route-flow 12s linear infinite;animation-play-state:paused;stroke-dasharray:6 8}
+.project-motion-scene.scene-visible svg *{animation-play-state:running}
+@keyframes project-crop-sweep{0%,100%{transform:translateX(0);opacity:.45}50%{transform:translateX(230px);opacity:.75}}
+@keyframes project-tower-sweep{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(105px);opacity:.8}}
+@keyframes project-satellite-drift{0%,100%{transform:translate(45px,68px) rotate(-30deg)}50%{transform:translate(275px,48px) rotate(15deg)}}
+@keyframes project-soft-pulse{0%,100%{opacity:.55;transform:scale(.95)}50%{opacity:.9;transform:scale(1.1)}}
+@keyframes project-route-flow{to{stroke-dashoffset:-28}}
+@media(prefers-reduced-motion:reduce){.project-motion-scene .crop-scan{transform:translateX(115px)}.project-motion-scene .thermal-scan{transform:translateY(52px)}.project-motion-scene .satellite{transform:translate(160px,40px)}}

@@ -67,19 +67,11 @@ export function ProjectJourney() {
     if (!el) return;
     const articles = [...el.querySelectorAll<HTMLElement>('[data-case]')];
     const scenes = [...el.querySelectorAll<HTMLElement>('.project-motion-scene')];
-    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const visibility = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('scene-visible', entry.isIntersecting)), { threshold: .1 });
     scenes.forEach(scene => visibility.observe(scene));
     let frame = 0;
     const update = () => {
       frame = 0;
-      if (!reduced.matches && document.documentElement.dataset.motion !== 'paused') {
-        scenes.forEach(scene => {
-          const bounds = scene.getBoundingClientRect();
-          const travel = Math.max(0, Math.min(1, (innerHeight * .85 - bounds.top) / (innerHeight * .6 + bounds.height * .4)));
-          scene.style.setProperty('--scene-progress', String(travel));
-        });
-      }
       const readingLine = innerHeight * .52;
       let index = 0;
       for (let i = 0; i < articles.length; i++) {
@@ -87,7 +79,7 @@ export function ProjectJourney() {
       }
       const rect = articles[index].getBoundingClientRect();
       const fraction = Math.max(0, Math.min(1, (readingLine - rect.top) / Math.max(rect.height, 1)));
-      const stage = Math.min(2, Math.floor(fraction * 3));
+      const stage = 2;
       el.style.setProperty('--case-progress', String((index + fraction) / cases.length));
       setPosition(previous => previous.index === index && previous.stage === stage ? previous : { index, stage });
     };
@@ -120,7 +112,7 @@ export function ProjectJourney() {
       <figure className={`project-motion-scene motion-${project.id}`}>
         <div className="project-motion-header"><span>{project.id === 'crop' ? 'TEMPORAL FIELD SCAN' : project.id === 'tower' ? 'STRUCTURE & CONDITION' : 'DEMAND → FACILITIES'}</span><span aria-hidden="true">/{project.number}</span></div>
         <ProjectVisual kind={project.id}/>
-        <figcaption>Illustrative workflow · scroll to explore</figcaption>
+        <figcaption>Illustrative workflow · continuous animation</figcaption>
       </figure>
       <div className="case-mobile-diagram"><Workflow project={project}/><p>Workflow illustration · not live measurements</p></div>
       <dl className="case-method"><div><dt><span>01</span> Input</dt><dd>{project.input}</dd></div><div><dt><span>02</span> Method</dt><dd>{project.method}</dd></div><div><dt><span>03</span> Output</dt><dd>{project.output}</dd></div></dl>
