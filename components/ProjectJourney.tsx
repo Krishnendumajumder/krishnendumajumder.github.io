@@ -107,7 +107,7 @@ export function ProjectJourney() {
       <span className="observer-scroll"><ArrowDown size={14} aria-hidden="true"/> Scroll through the work</span>
     </aside>
     <div className="case-studies">{cases.map((project) => <article id={`project-${project.id}`} key={project.id} data-case className="case-study" style={{ '--case-color': project.color } as CSSProperties}>
-      <div className="case-study__label"><span>PROJECT {project.number}</span><span>{project.category}</span></div>
+      <div className="case-study__label"><span>PROJECT {project.number}</span><span>{project.id === 'crop' ? 'INTERNSHIP-RELATED WORKFLOW' : project.id === 'tower' ? 'PROJECT PROTOTYPE' : 'ACADEMIC PROJECT'}</span><span>{project.category}</span></div>
       <h3>{project.title}</h3><p className="case-question">{project.question}</p><p className="case-context">{project.context}</p>
       <figure className={`project-motion-scene motion-${project.id}`}>
         <div className="project-motion-header"><span>{project.id === 'crop' ? 'TEMPORAL FIELD SCAN' : project.id === 'tower' ? 'STRUCTURE & CONDITION' : 'DEMAND → FACILITIES'}</span><span aria-hidden="true">/{project.number}</span></div>
@@ -117,7 +117,7 @@ export function ProjectJourney() {
       <div className="case-mobile-diagram"><Workflow project={project}/><p>Workflow illustration · not live measurements</p></div>
       <dl className="case-method"><div><dt><span>01</span> Input</dt><dd>{project.input}</dd></div><div><dt><span>02</span> Method</dt><dd>{project.method}</dd></div><div><dt><span>03</span> Output</dt><dd>{project.output}</dd></div></dl>
       <ul className="case-tools" aria-label="Tools and disciplines">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
-      <details className="case-notes"><summary>Scope & interpretation <span aria-hidden="true">+</span></summary><p>{project.note}</p></details>
+      <details className="case-notes"><summary>Open project overview <span aria-hidden="true">+</span></summary><p>{project.context}</p><p>{project.note}</p></details>
     </article>)}
     <div className="case-outro"><p>Interested in how I approach a problem?</p><a href="#contact">Let’s discuss the work <ArrowUpRight size={18} aria-hidden="true"/></a></div></div>
   </div>;
