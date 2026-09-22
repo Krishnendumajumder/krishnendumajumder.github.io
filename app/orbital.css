@@ -100,3 +100,7 @@ h1 .accent-line{background:linear-gradient(100deg,var(--cyan) 0%,#6da8ff 25%,var
 html[data-motion='paused'] .discipline-rotation>span{animation-play-state:paused}
 html[data-motion='paused'] .atlas-description-copy{animation:none}
 @media(prefers-reduced-motion:reduce){.discipline-rotation>span{animation:none;display:none;transform:none;filter:none}.discipline-rotation>span:first-child{display:block;opacity:1}.atlas-description-copy{animation:none}.atlas-scroll-track .atlas-controls button{transition:none}}
+
+/* Give the hero globe breathing room before its scroll sequence. */
+.atlas-scroll-track{margin-top:56px}
+@media(max-width:800px){.atlas-scroll-track{margin-top:24px}}
