@@ -1,11 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Pause, Play } from 'lucide-react';
+import { Pause, Play, Smartphone } from 'lucide-react';
 import { GalaxyScene } from './GalaxyScene';
 
 export function SiteExperience() {
   const [paused, setPaused] = useState(false);
+  const [tilt, setTilt] = useState<'hidden'|'ask'|'active'|'denied'>('hidden');
+  useEffect(() => {
+    const coarse = matchMedia('(pointer: coarse)').matches;
+    if (!coarse || !('DeviceOrientationEvent' in window)) return;
+    const orientation = DeviceOrientationEvent as typeof DeviceOrientationEvent & { requestPermission?: () => Promise<'granted'|'denied'> };
+    setTilt(typeof orientation.requestPermission === 'function' ? 'ask' : 'active');
+  }, []);
+  const enableTilt = async () => {
+    const orientation = DeviceOrientationEvent as typeof DeviceOrientationEvent & { requestPermission?: () => Promise<'granted'|'denied'> };
+    if (!orientation.requestPermission) { setTilt('active'); return; }
+    try { setTilt(await orientation.requestPermission() === 'granted' ? 'active' : 'denied'); }
+    catch { setTilt('denied'); }
+  };
   useEffect(() => {
     document.documentElement.dataset.motion = paused ? 'paused' : 'running';
     return () => { delete document.documentElement.dataset.motion; };
@@ -46,5 +59,5 @@ export function SiteExperience() {
     onScroll(); addEventListener('scroll', onScroll, { passive: true });
     return () => { reveal.disconnect(); itemReveal.disconnect(); active.disconnect(); removeEventListener('scroll', onScroll); document.documentElement.classList.remove('motion-ready'); items.forEach(item => item.classList.remove('scroll-reveal', 'in-view')); delete document.body.dataset.cosmicSection; };
   }, []);
-  return <><GalaxyScene paused={paused}/><div className="scroll-orbit" aria-hidden="true"><span className="scroll-orbit__core"/><span className="scroll-orbit__satellite"/></div><div className="scroll-readout" aria-hidden="true"><span>FIELD MOTION</span><strong>SCROLL / <b>00</b></strong></div><button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
+  return <><GalaxyScene paused={paused} tiltEnabled={tilt==='active'}/><div className="scroll-orbit" aria-hidden="true"><span className="scroll-orbit__core"/><span className="scroll-orbit__satellite"/></div><div className="scroll-readout" aria-hidden="true"><span>FIELD MOTION</span><strong>SCROLL / <b>00</b></strong></div>{(tilt==='ask'||tilt==='denied')&&<button className="tilt-control" type="button" onClick={enableTilt} disabled={tilt==='denied'}><Smartphone size={14}/><span>{tilt==='denied'?'Tilt unavailable':'Enable tilt stars'}</span></button>}<button className="motion-control" type="button" onClick={()=>setPaused(!paused)} aria-pressed={paused} aria-label={paused ? 'Resume animations' : 'Pause animations'}>{paused ? <Play size={14}/> : <Pause size={14}/>}<span>{paused ? 'Motion off' : 'Motion on'}</span></button></>;
 }

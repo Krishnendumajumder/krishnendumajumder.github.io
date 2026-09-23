@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { useMouseParallax } from '@/hooks/useMouseParallax';
+import { useDeviceTiltParallax } from '@/hooks/useDeviceTiltParallax';
 import { usePerformanceTier } from '@/hooks/usePerformanceTier';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
 
@@ -84,7 +85,7 @@ function createStars(count: number) {
   return data;
 }
 
-export function GalaxyScene({ paused = false }: { paused?: boolean }) {
+export function GalaxyScene({ paused = false, tiltEnabled = false }: { paused?: boolean; tiltEnabled?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progress = useRef(0);
   const velocity = useRef(0);
@@ -92,6 +93,8 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
   const performanceTier = usePerformanceTier();
   const tier = paused ? 'reduced' : performanceTier;
   const mouse = useMouseParallax(tier === 'desktop');
+  const tilt = useDeviceTiltParallax(tier === 'mobile' && tiltEnabled && !paused);
+  const parallax = tier === 'mobile' ? tilt : mouse;
   const trackScroll = useCallback((p: number, v: number) => { progress.current = p; velocity.current = v; }, []);
   useScrollProgress(trackScroll);
 
@@ -122,7 +125,7 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
       const entrance = tier === 'reduced' ? 0 : Math.pow(1 - Math.min(1, (now-introStart.current)/2600), 3);
       smoothP += (progress.current-smoothP)*(tier==='reduced'?1:.045);
       smoothWarp += ((tier==='reduced'?0:velocity.current)-smoothWarp)*.07;
-      mx += (mouse.current.x-mx)*.065; my += (mouse.current.y-my)*.065;
+      mx += (parallax.current.x-mx)*.065; my += (parallax.current.y-my)*.065;
       const journey=tier==='reduced'?.08:smoothP;
       const x=Math.sin(journey*Math.PI*2.1)*3.2-mx*11.5;
       const drift = tier === 'reduced' ? 0 : Math.sin(now*.00008)*.8;
@@ -143,7 +146,7 @@ export function GalaxyScene({ paused = false }: { paused?: boolean }) {
     const visibility=()=>{cancelAnimationFrame(raf);if(!document.hidden)raf=requestAnimationFrame(draw)};
     resize(); window.addEventListener('resize',resize,{passive:true}); document.addEventListener('visibilitychange',visibility);
     return()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);document.removeEventListener('visibilitychange',visibility);cosmos?.style.removeProperty('--field-x');cosmos?.style.removeProperty('--field-y');cosmos?.style.removeProperty('--field-x-soft');cosmos?.style.removeProperty('--field-y-soft');cosmos?.style.removeProperty('--field-x-reverse');cosmos?.style.removeProperty('--field-y-reverse');gl.deleteBuffer(buffer);gl.deleteProgram(program)};
-  }, [tier, mouse]);
+  }, [tier, parallax]);
 
   return <div className="cosmos" aria-hidden="true">
     <div className="section-auras"><i className="aura aura-home"/><i className="aura aura-skills"/><i className="aura aura-projects"/><i className="aura aura-contact"/></div>
