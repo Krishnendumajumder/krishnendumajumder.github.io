@@ -1,0 +1,40 @@
+.skill-proof__hint {
+  margin: 18px 0 0;
+  color: #91a7c8;
+  font-size: 14px;
+}
+
+.skill-proof__tabs button {
+  transition: color .18s, border-color .18s, background .18s, transform .18s;
+}
+
+.skill-proof__tabs button:hover,
+.skill-proof__tabs button:focus-visible,
+.skill-proof__tabs button[aria-pressed='true'] {
+  color: #fff;
+  border-color: #52e4ff;
+  background: #52e4ff12;
+  transform: translateX(4px);
+}
+
+.skill-proof__reveal {
+  animation: skill-evidence-in .24s ease both;
+}
+
+.skill-proof__result span {
+  font: 11px var(--font-geist-mono), monospace;
+  color: #f788e8;
+}
+
+@keyframes skill-evidence-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-proof__tabs button { transition: none; }
+  .skill-proof__tabs button:hover,
+  .skill-proof__tabs button:focus-visible,
+  .skill-proof__tabs button[aria-pressed='true'] { transform: none; }
+  .skill-proof__reveal { animation: none; }
+}
