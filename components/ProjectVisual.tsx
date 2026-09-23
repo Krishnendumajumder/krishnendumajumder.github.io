@@ -1,7 +1,16 @@
 type ProjectVisualProps = { kind: 'crop' | 'tower' | 'network' };
 
+const visuals = {
+  crop: { src: '/projects/crop-intelligence.png', alt: 'Satellite-style view of agricultural field parcels with a restrained multispectral analysis overlay', label: 'MULTI-TEMPORAL FIELD ANALYSIS' },
+  tower: { src: '/projects/tower-inspection.png', alt: 'Transmission tower inspection scene with a subtle thermal condition-analysis overlay', label: 'INFRASTRUCTURE CONDITION REVIEW' },
+  network: { src: '/projects/facility-network.png', alt: 'Regional logistics network with three emphasized distribution facilities and connecting routes', label: 'P-MEDIAN NETWORK MODEL' },
+} as const;
+
 export function ProjectVisual({ kind }: ProjectVisualProps) {
-  if (kind === 'crop') return <div className="project-visual crop-visual" aria-hidden="true"><svg viewBox="0 0 320 150"><g className="field-grid"><path d="M18 45H302M18 77H302M18 109H302M66 24V129M114 24V129M162 24V129M210 24V129M258 24V129"/></g><path className="orbit-path" d="M-5 117C74 20 226 9 330 74"/><g className="satellite"><rect x="-8" y="-5" width="16" height="10" rx="2"/><path d="M-9 0H-28M9 0H28M-28-7V7M28-7V7"/></g><rect className="crop-scan" x="25" y="25" width="42" height="102"/><g className="classified"><rect x="67" y="46" width="46" height="30"/><rect x="163" y="78" width="46" height="30"/><rect x="259" y="46" width="42" height="30"/></g></svg><span>SATELLITE CLASSIFICATION PASS</span></div>;
-  if (kind === 'tower') return <div className="project-visual tower-visual" aria-hidden="true"><svg viewBox="0 0 320 150"><g className="tower"><path d="M160 18L115 130M160 18L205 130M127 100H193M136 76H184M145 51H175M111 130H209M126 102L194 102M137 76L183 76"/><path d="M20 48H140M180 48H300"/></g><line className="thermal-scan" x1="35" y1="22" x2="285" y2="22"/><circle className="heat heat-a" cx="168" cy="74" r="7"/><circle className="heat heat-b" cx="141" cy="104" r="4"/></svg><span>THERMAL DISTRESS SCAN</span></div>;
-  return <div className="project-visual network-visual" aria-hidden="true"><svg viewBox="0 0 320 150"><g className="connections"><path d="M48 41L105 74L164 31L214 78L277 43M48 41L82 119L151 105L214 78L267 119M105 74L151 105L164 31M214 78L267 119M151 105L267 119M214 78L299 111"/></g><g className="nodes"><circle cx="48" cy="41" r="5"/><circle cx="105" cy="74" r="5"/><circle className="selected" cx="164" cy="31" r="8"/><circle className="selected" cx="214" cy="78" r="8"/><circle cx="277" cy="43" r="5"/><circle cx="82" cy="119" r="5"/><circle className="selected" cx="151" cy="105" r="8"/><circle cx="267" cy="119" r="5"/><circle cx="299" cy="111" r="5"/></g></svg><span>P-MEDIAN FACILITY SELECTION</span></div>;
+  const visual = visuals[kind];
+  return <figure className={`project-visual project-visual-real project-visual-${kind}`}>
+    <img src={visual.src} alt={visual.alt} loading="lazy" decoding="async"/>
+    <i className="project-visual-grid" aria-hidden="true"/>
+    <span>{visual.label}</span>
+  </figure>;
 }

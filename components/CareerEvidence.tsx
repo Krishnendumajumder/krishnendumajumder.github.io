@@ -5,6 +5,7 @@ import { ArrowUpRight, BriefcaseBusiness, Check, ExternalLink, Mail, Radar, Sate
 import { ProjectVisual } from './ProjectVisual';
 import './career-evidence.css';
 import './skill-hover.css';
+import './project-visual-real.css';
 
 const projects = [
   { id:'crop' as const, number:'01', status:'Internship-related workflow', title:'Crop intelligence', question:'How can multi-temporal satellite signals support crop classification?', evidence:'Sentinel-1 SAR, Sentinel-2 bands, vegetation indices, KML field boundaries, and Google Earth Engine workflows.', process:['Observe fields','Compare time series','Classify patterns'], skills:['Python','Google Earth Engine','Remote sensing','Machine learning'], note:'Conceptual workflow; no validation score is claimed.', Icon:Satellite },
@@ -34,7 +35,7 @@ export function CareerEvidence(){
         <div className="command-copy"><div className="project-status"><project.Icon size={15}/>{project.status}</div><h4>{project.question}</h4><p>{project.evidence}</p><ol>{project.process.map((step,index)=><li key={step}><span>0{index+1}</span>{step}</li>)}</ol><div className="command-skills">{project.skills.map(item=><span key={item}>{item}</span>)}</div><small>{project.note}</small><a href={`#project-${project.id}`}>Open full case study <ArrowUpRight size={16}/></a></div>
       </div>
     </div>
-    <div className="evidence-gallery"><div className="gallery-heading"><span>PROJECT MEDIA GALLERY</span><p>These diagrams explain each workflow. Real output screenshots can replace them when verified assets are available.</p></div><div className="gallery-grid">{projects.map((item,index)=><button key={item.id} type="button" onClick={()=>{setActive(index);document.getElementById('evidence-title')?.scrollIntoView({behavior:'smooth',block:'start'})}}><ProjectVisual kind={item.id}/><span>{item.status}</span><strong>{item.title}</strong><small>View in command center <ExternalLink size={13}/></small></button>)}</div></div>
+    <div className="evidence-gallery"><div className="gallery-heading"><span>PROJECT MEDIA GALLERY</span><p>Realistic editorial visualizations of each workflow. They explain the project context and do not represent measured results.</p></div><div className="gallery-grid">{projects.map((item,index)=><button key={item.id} type="button" onClick={()=>{setActive(index);document.getElementById('evidence-title')?.scrollIntoView({behavior:'smooth',block:'start'})}}><ProjectVisual kind={item.id}/><span>{item.status}</span><strong>{item.title}</strong><small>View in command center <ExternalLink size={13}/></small></button>)}</div></div>
     <div className="skill-proof"><div><span>SKILLS / EVIDENCE</span><h3>Every tool connects<br/>to a piece of work.</h3><p className="skill-proof__hint">Move over a skill to see where it was used.</p></div><div className="skill-proof__body"><div className="skill-proof__tabs">{skills.map(([name],index)=><button key={name} type="button" aria-pressed={skill===index} onMouseEnter={()=>setSkill(index)} onFocus={()=>setSkill(index)} onClick={()=>setSkill(index)}>{name}</button>)}</div><div className="skill-proof__result" aria-live="polite"><div key={skill} className="skill-proof__reveal"><span>USED IN</span>{skills[skill][1].map(item=><p key={item}><Check size={16}/>{item}</p>)}</div></div></div></div>
   </section>;
 }

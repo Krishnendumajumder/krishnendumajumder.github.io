@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { ProjectVisual } from './ProjectVisual';
 import './project-journey.css';
+import './project-visual-real.css';
 
 const cases = [
   {
