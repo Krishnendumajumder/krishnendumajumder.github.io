@@ -1,0 +1,9 @@
+.command-tabs{grid-template-columns:repeat(4,1fr)}
+.gallery-grid{grid-template-columns:repeat(2,1fr)}
+.project-visual-commerce img{animation-name:project-commerce-drift;animation-duration:24s;filter:saturate(.72) contrast(1.08) brightness(.76)}
+.project-visual-commerce:hover img,.command-visual:hover .project-visual-commerce img{filter:saturate(.9) contrast(1.08) brightness(.86)}
+.project-visual-commerce:after{animation-delay:-1s}
+.case-download{display:inline-flex;align-items:center;gap:9px;margin:0 0 22px;padding:10px 13px;border:1px solid color-mix(in srgb,var(--case-color) 48%,transparent);color:var(--case-color);font-size:13px;background:color-mix(in srgb,var(--case-color) 8%,transparent)}
+@keyframes project-commerce-drift{from{transform:scale(1.045) translate3d(-.45%,0,0)}to{transform:scale(1.07) translate3d(.45%,0,0)}}
+@media(max-width:900px){.command-tabs{grid-template-columns:repeat(2,1fr)}.project-observer .case-index{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.command-tabs{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr}}

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Download } from 'lucide-react';
 import { ProjectVisual } from './ProjectVisual';
 import './project-journey.css';
 import './project-visual-real.css';
+import './commerce-project.css';
 
 const cases = [
   {
@@ -42,6 +43,18 @@ const cases = [
     note: 'Nine cities and three facilities describe the model setup. No unverified cost savings or solver performance figures are claimed.',
     tags: ['IBM CPLEX', 'OPL', 'Mixed integer programming'],
     stages: [ ['MODEL', '9-city demand', 'Distance matrix'], ['CONSTRAIN', 'P = 3 facilities', 'One assignment each'], ['OPTIMIZE', 'Weighted distance', 'Facility assignments'] ],
+  },
+  {
+    id: 'commerce', number: '04', short: 'Commerce analytics', category: 'DATA ANALYSIS', color: '#7ce7b2',
+    title: 'Olist Brazilian e-commerce analytics',
+    question: 'What do marketplace orders reveal about revenue, delivery friction, and customer experience?',
+    context: 'An executed Jupyter notebook analyzing the public Olist Brazilian e-commerce dataset across orders, payments, products, customers, reviews, categories, time, and geography.',
+    input: 'Linked order, item, payment, customer, review, product, and category-translation tables from the public Olist dataset.',
+    method: 'Join marketplace tables with Pandas, validate key identifiers, calculate operational KPIs, segment results by month, state, region, and category, and visualize delivery and review relationships.',
+    output: 'A reproducible notebook with KPI summaries, geographic and category comparisons, delivery diagnostics, customer-satisfaction analysis, an interactive map, and exploratory trend scenarios.',
+    note: 'The executed notebook reports 96,478 delivered orders, BRL 15.42M in total payment value, a 12.1-day average delivery time, a 6.8% late rate, and a 4.16 average review score. Its future category-growth projection is exploratory rather than a validated production forecast.',
+    tags: ['Python', 'Pandas', 'Matplotlib & Seaborn', 'Folium'],
+    stages: [ ['LOAD', 'Linked tables', 'Integrity checks'], ['ANALYZE', 'KPI + segments', 'Delivery & reviews'], ['EXPLAIN', 'Charts + map', 'Business findings'] ],
   },
 ] as const;
 
@@ -96,7 +109,7 @@ export function ProjectJourney() {
   const current = cases[position.index];
   return <div className="project-journey" ref={root} style={{ '--case-color': current.color } as CSSProperties}>
     <aside className="project-observer" aria-label="Project explorer">
-      <div className="project-observer__header"><span>FIELDNOTES / SELECTED WORK</span><span>{current.number} <span className="observer-total">/ 03</span></span></div>
+      <div className="project-observer__header"><span>FIELDNOTES / SELECTED WORK</span><span>{current.number} <span className="observer-total">/ 04</span></span></div>
       <nav className="case-index" aria-label="Project chapters">{cases.map((project, i) => <a key={project.id} href={`#project-${project.id}`} aria-current={position.index === i ? 'step' : undefined}><span>{project.number}</span>{project.short}<ArrowUpRight size={16} aria-hidden="true"/></a>)}</nav>
       <div className="project-observer__display">
         {cases.map((project, i) => <div key={project.id} className={`workflow-panel ${position.index === i ? 'is-current' : ''}`} aria-hidden={position.index !== i} style={{ '--case-color': project.color } as CSSProperties}>
@@ -108,16 +121,17 @@ export function ProjectJourney() {
       <span className="observer-scroll"><ArrowDown size={14} aria-hidden="true"/> Scroll through the work</span>
     </aside>
     <div className="case-studies">{cases.map((project) => <article id={`project-${project.id}`} key={project.id} data-case className="case-study" style={{ '--case-color': project.color } as CSSProperties}>
-      <div className="case-study__label"><span>PROJECT {project.number}</span><span>{project.id === 'crop' ? 'INTERNSHIP-RELATED WORKFLOW' : project.id === 'tower' ? 'PROJECT PROTOTYPE' : 'ACADEMIC PROJECT'}</span><span>{project.category}</span></div>
+      <div className="case-study__label"><span>PROJECT {project.number}</span><span>{project.id === 'crop' ? 'INTERNSHIP-RELATED WORKFLOW' : project.id === 'tower' ? 'PROJECT PROTOTYPE' : project.id === 'commerce' ? 'EXECUTED NOTEBOOK' : 'ACADEMIC PROJECT'}</span><span>{project.category}</span></div>
       <h3>{project.title}</h3><p className="case-question">{project.question}</p><p className="case-context">{project.context}</p>
       <figure className={`project-motion-scene motion-${project.id}`}>
-        <div className="project-motion-header"><span>{project.id === 'crop' ? 'TEMPORAL FIELD SCAN' : project.id === 'tower' ? 'STRUCTURE & CONDITION' : 'DEMAND → FACILITIES'}</span><span aria-hidden="true">/{project.number}</span></div>
+        <div className="project-motion-header"><span>{project.id === 'crop' ? 'TEMPORAL FIELD SCAN' : project.id === 'tower' ? 'STRUCTURE & CONDITION' : project.id === 'commerce' ? 'MARKETPLACE KPI VIEW' : 'DEMAND → FACILITIES'}</span><span aria-hidden="true">/{project.number}</span></div>
         <ProjectVisual kind={project.id}/>
-        <figcaption>Illustrative workflow · continuous animation</figcaption>
+        <figcaption>{project.id === 'commerce' ? 'Chart captured from the executed notebook · continuous subtle motion' : 'Illustrative workflow · continuous animation'}</figcaption>
       </figure>
       <div className="case-mobile-diagram"><Workflow project={project}/><p>Workflow illustration · not live measurements</p></div>
       <dl className="case-method"><div><dt><span>01</span> Input</dt><dd>{project.input}</dd></div><div><dt><span>02</span> Method</dt><dd>{project.method}</dd></div><div><dt><span>03</span> Output</dt><dd>{project.output}</dd></div></dl>
       <ul className="case-tools" aria-label="Tools and disciplines">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
+      {project.id === 'commerce' && <a className="case-download" href="/projects/olist-ecommerce-data-analysis.ipynb" download><Download size={16} aria-hidden="true"/> Download executed notebook</a>}
       <details className="case-notes"><summary>Open project overview <span aria-hidden="true">+</span></summary><p>{project.context}</p><p>{project.note}</p></details>
     </article>)}
     <div className="case-outro"><p>Interested in how I approach a problem?</p><a href="#contact">Let’s discuss the work <ArrowUpRight size={18} aria-hidden="true"/></a></div></div>
