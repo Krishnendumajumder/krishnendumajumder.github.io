@@ -1,9 +1,15 @@
 .command-tabs{grid-template-columns:repeat(4,1fr)}
 .gallery-grid{grid-template-columns:repeat(2,1fr)}
+.gallery-grid>a{text-align:left;padding:0 0 20px;background:#0a1024;border:1px solid #7894bf38;color:#fff;overflow:hidden;transition:transform .25s,border-color .25s}
+.gallery-grid>a:hover{transform:translateY(-5px);border-color:#52e4ff80}
+.gallery-grid>a>span,.gallery-grid>a>strong,.gallery-grid>a>small{display:block;margin-left:18px;margin-right:18px}
+.gallery-grid>a>span{color:#f788e8;font:10px var(--font-geist-mono),monospace;letter-spacing:.07em}
+.gallery-grid>a>strong{font-size:18px;font-weight:500;margin-top:8px}
+.gallery-grid>a>small{display:flex;gap:7px;align-items:center;color:#91a7c8;margin-top:12px}
 .project-visual-commerce img{animation-name:project-commerce-drift;animation-duration:24s;filter:saturate(.72) contrast(1.08) brightness(.76)}
 .project-visual-commerce:hover img,.command-visual:hover .project-visual-commerce img{filter:saturate(.9) contrast(1.08) brightness(.86)}
 .project-visual-commerce:after{animation-delay:-1s}
 .case-download{display:inline-flex;align-items:center;gap:9px;margin:0 0 22px;padding:10px 13px;border:1px solid color-mix(in srgb,var(--case-color) 48%,transparent);color:var(--case-color);font-size:13px;background:color-mix(in srgb,var(--case-color) 8%,transparent)}
 @keyframes project-commerce-drift{from{transform:scale(1.045) translate3d(-.45%,0,0)}to{transform:scale(1.07) translate3d(.45%,0,0)}}
-@media(max-width:900px){.command-tabs{grid-template-columns:repeat(2,1fr)}.project-observer .case-index{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:560px){.command-tabs{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.command-tabs{grid-template-columns:repeat(2,1fr)}.project-observer .case-index{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-grid>a{display:grid;grid-template-columns:180px 1fr}.gallery-grid>a .project-visual{grid-row:1/5;height:160px;margin:0 18px 0 0}.gallery-grid>a>span{margin-top:22px}}
+@media(max-width:560px){.command-tabs{grid-template-columns:1fr}.gallery-grid{grid-template-columns:1fr}.gallery-grid>a{display:block}.gallery-grid>a .project-visual{height:190px;margin:0 0 16px}.gallery-grid>a>span{margin-top:0}}
