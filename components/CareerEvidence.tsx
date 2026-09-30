@@ -17,12 +17,15 @@ const projects = [
 
 const skills = [
   ['Python',['Crop intelligence','Infrastructure insight','Commerce analytics']],
-  ['Data analysis',['Commerce analytics']],
-  ['Machine learning',['Crop intelligence']],
+  ['Data analytics & EDA',['Commerce analytics']],
+  ['Pandas, NumPy & SQL',['Commerce analytics']],
+  ['Machine learning & evaluation',['Crop intelligence']],
+  ['Feature engineering & threshold tuning',['Crop intelligence']],
   ['Google Earth Engine',['Crop intelligence']],
-  ['Computer vision',['Infrastructure insight']],
+  ['YOLO & computer vision',['Infrastructure insight']],
+  ['Thermal/LST & NDVI',['Infrastructure insight']],
   ['IBM CPLEX / OPL',['Facility decisions']],
-  ['SQL, Java, C',['Programming foundations']],
+  ['Java, C & Git',['Programming foundations']],
 ] as const;
 
 export function CareerEvidence(){
@@ -33,7 +36,7 @@ export function CareerEvidence(){
   </section>;
 }
 
-export function AvailabilityCard(){return <div className="availability-card"><div><span className="availability-dot"/><span>OPEN TO OPPORTUNITIES</span></div><h3>AI/ML, computer vision,<br/>remote sensing & data science.</h3><p>Based in Kolkata and interested in entry-level roles where data, software, and real-world problems meet.</p><a href="#contact">Start a conversation <ArrowUpRight size={17}/></a></div>}
+export function AvailabilityCard(){return <div className="availability-card"><div><span className="availability-dot"/><span>OPEN TO OPPORTUNITIES</span></div><h3>AI/ML, data analytics,<br/>remote sensing & computer vision.</h3><p>Based in Kolkata and interested in roles where data, machine learning, software, and real-world problems meet.</p><a href="#contact">Start a conversation <ArrowUpRight size={17}/></a></div>}
 
 export function ContactForm(){
   const [sent,setSent]=useState(false);

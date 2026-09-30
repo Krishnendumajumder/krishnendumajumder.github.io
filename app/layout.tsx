@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Krishnendu Majumder | AI & ML Developer', description: 'AI, remote sensing, and optimization projects by Krishnendu Majumder, a developer based in Kolkata.',
+  title: 'Krishnendu Majumder | AI/ML Developer & Data Analyst',
+  description: 'Portfolio of Krishnendu Majumder: AI/ML, data analytics, remote sensing, computer vision, geospatial workflows, and optimization projects.',
 };
 
 export default function RootLayout({
