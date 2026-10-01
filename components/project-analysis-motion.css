@@ -1,0 +1,20 @@
+.project-analysis-motion{position:absolute;inset:0;z-index:2;pointer-events:none;--analysis-color:#52e4ff}
+.project-visual-tower .project-analysis-motion{--analysis-color:#f788e8}
+.project-visual-network .project-analysis-motion{--analysis-color:#b6a0ff}
+.project-visual-commerce .project-analysis-motion{--analysis-color:#8eeaff}
+.analysis-sweep{position:absolute;inset:0 auto 0 -25%;width:24%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--analysis-color) 12%,transparent));border-right:1px solid color-mix(in srgb,var(--analysis-color) 60%,transparent);opacity:0;animation:analysis-field-sweep 9s cubic-bezier(.4,0,.2,1) infinite;will-change:transform,opacity}
+.project-visual-tower .analysis-sweep{inset:-25% 0 auto;width:100%;height:24%;border-right:0;border-bottom:1px solid color-mix(in srgb,var(--analysis-color) 60%,transparent);background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--analysis-color) 12%,transparent));animation:analysis-condition-sweep 10s cubic-bezier(.4,0,.2,1) infinite}
+.project-visual-network .analysis-sweep{display:none}
+.project-visual-commerce .analysis-sweep{width:12%;left:-13%;background:linear-gradient(90deg,transparent,#52e4ff1a,transparent);border:0;animation:analysis-chart-sweep 12s ease-in-out infinite}
+.project-visual-real .analysis-routes{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--analysis-color);stroke-width:1.25;opacity:.65;overflow:hidden}
+.analysis-routes path{stroke-dasharray:4 220;animation:analysis-route-signal 10s linear infinite;filter:drop-shadow(0 0 3px #b6a0ff)}
+.analysis-routes path:nth-child(2){animation-delay:-3.3s}.analysis-routes path:nth-child(3){animation-delay:-6.6s}
+.analysis-corner{position:absolute;width:20px;height:20px;border-color:var(--analysis-color);border-style:solid;opacity:.4;animation:analysis-focus-pulse 6s ease-in-out infinite}
+.analysis-corner-start{top:12%;left:8%;border-width:1px 0 0 1px}.analysis-corner-end{right:8%;bottom:20%;border-width:0 1px 1px 0;animation-delay:-3s}
+@keyframes analysis-field-sweep{0%,10%{transform:translateX(0);opacity:0}18%{opacity:.75}75%{opacity:.75}90%,100%{transform:translateX(530%);opacity:0}}
+@keyframes analysis-condition-sweep{0%,10%{transform:translateY(0);opacity:0}18%{opacity:.7}75%{opacity:.7}90%,100%{transform:translateY(530%);opacity:0}}
+@keyframes analysis-chart-sweep{0%,12%{transform:translateX(0);opacity:0}20%{opacity:.8}75%{opacity:.8}90%,100%{transform:translateX(950%);opacity:0}}
+@keyframes analysis-route-signal{to{stroke-dashoffset:-448}}
+@keyframes analysis-focus-pulse{0%,100%{opacity:.25}50%{opacity:.65}}
+html[data-motion='paused'] .project-analysis-motion *{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){.project-analysis-motion *{animation:none!important}.analysis-sweep,.analysis-routes{display:none}.analysis-corner{opacity:.35}}
