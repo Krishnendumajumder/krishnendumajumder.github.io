@@ -80,9 +80,10 @@ h1 .accent-line{background:linear-gradient(100deg,var(--cyan) 0%,#6da8ff 25%,var
 /* One discipline at a time, with a quiet interval between phrases. */
 .discipline-strip.rotating-disciplines{display:grid;place-items:center;min-height:120px;padding:24px 5%;overflow:hidden}
 .discipline-rotation{display:grid;width:100%;text-align:center}
-.discipline-rotation>span{grid-area:1/1;font:500 clamp(18px,3vw,34px)/1.4 var(--font-geist-mono),monospace;letter-spacing:.12em;color:#dffaff;opacity:0;transform:translateY(14px);animation:discipline-cycle 10.8s ease-in-out infinite;will-change:opacity,transform}
+.discipline-rotation>span{grid-area:1/1;font:500 clamp(18px,3vw,34px)/1.4 var(--font-geist-mono),monospace;letter-spacing:.12em;color:#dffaff;opacity:0;transform:translateY(14px);animation:discipline-cycle 18s ease-in-out infinite;will-change:opacity,transform;overflow-wrap:anywhere}
 .discipline-rotation>span:nth-child(2){animation-delay:3.6s;color:#d0b8ff}.discipline-rotation>span:nth-child(3){animation-delay:7.2s;color:#ffadef}
-@keyframes discipline-cycle{0%{opacity:0;transform:translateY(14px);filter:blur(5px)}7%,24%{opacity:1;transform:translateY(0);filter:blur(0)}31%,100%{opacity:0;transform:translateY(-14px);filter:blur(5px)}}
+.discipline-rotation>span:nth-child(4){animation-delay:10.8s;color:#8eeaff}.discipline-rotation>span:nth-child(5){animation-delay:14.4s;color:#c7b6ff}
+@keyframes discipline-cycle{0%{opacity:0;transform:translateY(14px);filter:blur(5px)}4.2%,14.4%{opacity:1;transform:translateY(0);filter:blur(0)}18.6%,100%{opacity:0;transform:translateY(-14px);filter:blur(5px)}}
 .hero{overflow:visible}.hero-layout{align-items:start}
 .atlas-scroll-track{--atlas-height:650px;position:relative;min-width:0;height:calc(var(--atlas-height) + 85svh);align-self:start}
 .atlas-scroll-track .orbital-atlas{--orbit-color:#85c9ff;--atlas-phase:0;position:sticky;top:112px;margin:0;width:100%;max-width:none}
