@@ -105,3 +105,7 @@ html[data-motion='paused'] .atlas-description-copy{animation:none}
 /* Give the hero globe breathing room before its scroll sequence. */
 .atlas-scroll-track{margin-top:56px}
 @media(max-width:800px){.atlas-scroll-track{margin-top:24px}}
+
+/* Keep the personal wordmark readable without crowding navigation. */
+.brand{font-size:26px;letter-spacing:-1px;white-space:nowrap;flex-shrink:0}
+@media(max-width:480px){.brand{font-size:22px}.brand span{font-size:23px}}

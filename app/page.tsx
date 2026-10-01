@@ -9,16 +9,19 @@ import '@/components/technical-stack.css';
 import { OrbitalAtlas } from '@/components/OrbitalAtlas';
 import { AvailabilityCard, CareerEvidence, ContactForm } from '@/components/CareerEvidence';
 
+const Instagram = ({size=18}:{size?:number}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>;
+
 const socialLinks = [
   { label:'GitHub', href:'https://github.com/Krishnendumajumder', Icon:Code2 },
   { label:'LinkedIn', href:'https://www.linkedin.com/in/krishnendu-majumder-a376b83a8', Icon:Users },
+  { label:'Instagram', href:'https://www.instagram.com/mj_krish2000/', Icon:Instagram },
 ];
 const Label = ({children}:{children:React.ReactNode}) => <div className="eyebrow">{children}</div>;
 
 export default function Home(){return <>
   <SiteExperience/>
   <a className="skip" href="#main">Skip to content</a>
-  <header id="top"><a className="brand" href="#home" aria-label="Krishnendu Majumder home">km<span>✳</span></a><nav aria-label="Main navigation">{[['Home','home'],['Work','projects'],['About','about'],['Experience','experience'],['Skills','skills'],['Education','education']].map(([label,id])=><a data-nav key={id} href={`#${id}`}>{label}</a>)}</nav><a className="nav-contact" href="#contact">Let’s connect <ArrowUpRight size={16}/></a></header>
+  <header id="top"><a className="brand" href="#home" aria-label="Krishnendu Majumder home">MJ_krish<span>✳</span></a><nav aria-label="Main navigation">{[['Home','home'],['Work','projects'],['About','about'],['Experience','experience'],['Skills','skills'],['Education','education']].map(([label,id])=><a data-nav key={id} href={`#${id}`}>{label}</a>)}</nav><a className="nav-contact" href="#contact">Let’s connect <ArrowUpRight size={16}/></a></header>
   <div className="scroll-line" aria-hidden="true"/>
   <main id="main">
     <section id="home" data-section className="hero">
@@ -46,5 +49,5 @@ export default function Home(){return <>
 
     <section id="contact" data-section className="contact reveal"><div className="contact-heading"><Label>06 / YOUR NEXT IDEA</Label><span>LET’S MAKE IT HAPPEN</span></div><h2>Good work starts<br/>with a <span>conversation.</span></h2><div className="contact-grid"><div><p>Have an opportunity in AI, data science, or earth observation? I’d love to hear about it.</p><a className="email" href="mailto:krishnendumajumder32@gmail.com">krishnendumajumder32@gmail.com <ArrowUpRight size={23}/></a></div><ContactForm/></div><div className="contact-bottom"><div className="contact-socials">{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer"><Icon size={18}/>{label}<ArrowUpRight size={15}/></a>)}<PhoneReveal numbers={[{href:'tel:+919038709232',number:'+91 90387 09232',label:'primary phone number'},{href:'tel:+919038959441',number:'+91 90389 59441',label:'alternate phone number'}]}/></div><span><MapPin size={16}/> Kolkata, India</span></div></section>
   </main>
-  <footer><a className="brand" href="#home" aria-label="Back to home">km<span>✳</span></a><span>© {new Date().getFullYear()} Krishnendu Majumder</span><a href="#home">Back to top ↑</a></footer>
+  <footer><a className="brand" href="#home" aria-label="Back to home">MJ_krish<span>✳</span></a><span>© {new Date().getFullYear()} Krishnendu Majumder</span><a href="#home">Back to top ↑</a></footer>
 </>}
