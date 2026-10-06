@@ -1,6 +1,7 @@
-import { ArrowDown, ArrowUpRight, Code2, Users, MapPin, Satellite, Cpu, Network, ArrowRight, Download } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Code2, Users, MapPin, Satellite, Cpu, Network, ArrowRight } from 'lucide-react';
 import { SiteExperience } from '@/components/SiteExperience';
 import { PhoneReveal } from '@/components/PhoneReveal';
+import { ResumePreview } from '@/components/ResumePreview';
 import { ProjectJourney } from '@/components/ProjectJourney';
 import { SkillConstellation } from '@/components/SkillConstellation';
 import { TechnicalStack } from '@/components/TechnicalStack';
@@ -30,7 +31,7 @@ export default function Home(){return <>
         <p className="hero-kicker">KRISHNENDU MAJUMDER / AI & ML · DATA ANALYTICS · REMOTE SENSING · COMPUTER VISION</p>
         <h1><span className="intro-line">Intelligence.</span><br/><span className="intro-line accent-line">In orbit.</span></h1>
         <p className="hero-intro">Computer Science graduate building practical workflows across <strong>AI/ML, data analytics, remote sensing, and computer vision.</strong> I turn satellite imagery and complex datasets into structured analysis, models, and decision support.</p>
-        <div className="hero-actions"><a className="button" href="#projects">Explore my work <ArrowUpRight size={19}/></a><a className="text-link" href="/Krishnendu-Majumder-CV.pdf" download>Download résumé <Download size={17}/></a><a className="text-link" href="#contact">Get in touch <ArrowRight size={17}/></a></div>
+        <div className="hero-actions"><a className="button" href="#projects">Explore my work <ArrowUpRight size={19}/></a><ResumePreview/><a className="text-link" href="#contact">Get in touch <ArrowRight size={17}/></a></div>
         <div className="hero-location"><MapPin size={14}/> Kolkata, West Bengal <span/> Python · Machine Learning · Data Analytics · Geospatial AI</div>
       </div><OrbitalAtlas/></div>
       <div className="hero-footer"><a href="#projects"><span className="scroll-cue"><ArrowDown size={16}/></span> SCROLL TO EXPLORE</a><span>INDEPENDENT THINKING. APPLIED INTELLIGENCE.</span><div>{socialLinks.map(({label,href,Icon})=><a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}><Icon size={18}/></a>)}</div></div>

@@ -1,0 +1,22 @@
+.resume-preview-dialog{width:min(1000px,calc(100% - 32px));height:min(90dvh,1000px);max-width:calc(100% - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;overflow:hidden;border:1px solid #64d3ff55;border-radius:16px;color:#f4f7ff;background:#081025;box-shadow:0 30px 120px #000b;font-family:Arial,Helvetica,sans-serif}
+.resume-preview-dialog::backdrop{background:#020617d9;backdrop-filter:blur(10px)}
+.resume-preview-dialog[open]{animation:resume-preview-enter .18s ease-out}
+.resume-preview-shell{display:flex;flex-direction:column;height:100%;min-height:0}
+.resume-preview-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0;padding:20px 24px;border-bottom:1px solid #b0ceff26;background:linear-gradient(110deg,#09182b,#1a1033)}
+.resume-preview-heading>span{font:10px/1.5 monospace;letter-spacing:1.8px;color:#82eaff}
+.resume-preview-heading h2{margin:4px 0 0;font-size:25px;line-height:1.2;letter-spacing:-.6px;font-weight:500}
+.resume-preview-actions{display:flex;align-items:center;gap:12px}
+.resume-download,.resume-close{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border-radius:8px}
+.resume-download{padding:10px 15px;font-size:13px;font-weight:600;background:#85edff;color:#051325;white-space:nowrap}
+.resume-download:hover{background:#b5f5ff}
+.resume-close{width:44px;padding:0;border:1px solid #bbd7ff40;background:#ffffff08;color:#fff;cursor:pointer}
+.resume-close:hover{background:#ffffff16;border-color:#85edff}
+.resume-preview-document{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:24px;background:#040a18;scrollbar-color:#637d9d #081025}
+.resume-preview-document img{display:block;width:100%;max-width:850px;height:auto;margin:0 auto;background:#fff;box-shadow:0 8px 40px #0006}
+.resume-preview-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0;padding:14px 24px;border-top:1px solid #b0ceff26}
+.resume-preview-footer p{margin:0;font-size:12px;line-height:1.6;color:#b6c6df}
+.resume-preview-footer a{display:inline-flex;align-items:center;gap:6px;color:#85edff;font-size:13px;white-space:nowrap}
+.resume-preview-dialog :focus-visible{outline:2px solid #85edff;outline-offset:3px}
+@keyframes resume-preview-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.resume-preview-dialog{width:calc(100% - 16px);height:94dvh;max-width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:12px}.resume-preview-toolbar{padding:16px 12px;gap:10px;flex-wrap:wrap}.resume-preview-heading>span{font-size:9px;letter-spacing:1px}.resume-preview-heading h2{font-size:22px}.resume-preview-actions{gap:8px}.resume-download{font-size:12px;padding:10px}.resume-preview-document{padding:10px}.resume-preview-footer{padding:12px;gap:12px}.resume-preview-footer p{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.resume-preview-dialog[open]{animation:none}}
