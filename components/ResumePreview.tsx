@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ArrowUpRight, Download, FileText, X } from 'lucide-react';
 import './resume-preview.css';
 
-const resumeUrl = '/Krishnendu-Majumder-CV.pdf';
+const resumeUrl = '/Krishnendu-Majumder-CV.pdf?v=fa3dd5eb';
 
 export function ResumePreview() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -67,7 +67,7 @@ export function ResumePreview() {
         {/* Keyboard focus allows arrow/Page Down scrolling within the document. */}
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
         <section className="resume-preview-document" tabIndex={0} aria-label="Résumé document preview">
-          {isOpen && <Image src="/resume-preview.png" width={1391} height={1800} unoptimized
+          {isOpen && <Image src="/resume-preview.png?v=fa3dd5eb" width={1273} height={1800} unoptimized
             alt="Krishnendu Majumder’s résumé, including profile, education, skills, professional experience, training, and projects."/>}
         </section>
         <div className="resume-preview-footer">
